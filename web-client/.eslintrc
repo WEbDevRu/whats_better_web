@@ -14,7 +14,7 @@
     "files": [
       "*.ts", "*.tsx"
     ],
-    "ecmaVersion": 2018,
+    "ecmaVersion": 6,
     "sourceType": "module",
     "project": "./tsconfig.json",
     "tsconfigRootDir": "./",
@@ -22,20 +22,19 @@
     "useJSXTextNode": true,
     "ecmaFeatures": {
       // Enabled object spread
-      "experimentalObjectRestSpread": true
+      "experimentalObjectRestSpread": true,
+      "jsx": true,
+      "modules": true
     }
   },
   "extends": [
-    "airbnb",
     "airbnb-typescript",
-    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/react"
+    "plugin:import/recommended"
   ],
-  "plugins": ["@typescript-eslint", "react", "jsx-a11y"],
+  "plugins": ["@typescript-eslint", "react", "jsx-a11y", "import"],
   "settings": {
     "react": {
       "version": "detect"
@@ -52,6 +51,11 @@
         "ignoredNodes": ["TemplateLiteral"]
       }
     ],
+    "import/no-extraneous-dependencies": [
+      "error", {
+        "devDependencies": true
+      }
+    ],
     "operator-linebreak": [
       "error",
       "after",
@@ -62,11 +66,12 @@
         }
       }
     ],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "react/jsx-indent": ["error", 4],
     "react/jsx-indent-props": ["error", 4],
     "react/jsx-props-no-spreading": ["warn"],
     "implicit-arrow-linebreak": 0,
-    "linebreak-style": ["error", "unix"],
     "max-len": ["warn", { "code": 120 }],
     "no-plusplus": 0,
     "no-underscore-dangle": 0,
