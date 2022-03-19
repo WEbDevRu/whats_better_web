@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import { appWithTranslation } from 'next-i18next';
 import AppContextProvider  from '../component/Providers/AppContextProvider';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -11,4 +12,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
