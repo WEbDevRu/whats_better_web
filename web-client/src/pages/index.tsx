@@ -3,11 +3,14 @@ import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LoginContainer } from '../container/LoginContainer';
 import { NS_COMMON } from '../const/NAMESPACES';
+import { Layout } from '../component/Common/Layout';
+import { UserRoles } from '../const/user/USER_ROLES';
 
 const Home: NextPage = (props) => {
-    console.log(props);
     return (
-        <LoginContainer />
+        <Layout roles={UserRoles.Admin}>
+            <LoginContainer />
+        </Layout>
     );
 };
 
