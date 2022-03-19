@@ -27,25 +27,19 @@ const Layout = (props:PropsInterface) => {
 
     const {
         appState,
+        onGetMe,
     } = useApp();
 
     const router = useRouter();
 
     useEffect(() => {
         if (!appState?.isInit) {
-            let joinRoles: Array<UserRole | undefined> = [];
-            if (roles) {
-                if (Array.isArray(roles)) {
-                    joinRoles.concat(roles);
-                } else if (roles){
-                    joinRoles.push(roles);
-                }
-            }
+            onGetMe();
         }
-    }, [appState?.isInit, roles]);
+    }, [appState?.isInit]);
 
     useEffect(() => {
-        if (!appState?.isInit || roles || !redirectPath) {
+        if (!appState?.isInit || !redirectPath) {
             return;
         }
         if (roles && !isRoleMatch(appState.userRole, roles) && redirectPath) {
