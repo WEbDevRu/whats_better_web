@@ -1,4 +1,4 @@
-{
+nest{
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
