@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PrismaPostgres } from './providers/database/prismaPostres';
+import { AdminModule } from './controllers/admin/admin.module';
 
 @Module({
-    imports: [],
+    imports: [AdminModule],
     controllers: [],
     providers: [
         PrismaPostgres,
