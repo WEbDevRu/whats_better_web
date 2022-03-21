@@ -1,6 +1,3 @@
 {
-  "login": "L ogin",
-  "formErrors": {
-    "empty": "Please enter field {{ fieldName }}"
-  }
+  "login": "login"
 }
