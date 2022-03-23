@@ -8,11 +8,7 @@ generator client {
 }
 
 model Admin {
-  admin_id     String @id @db.Uuid
+  organizer_id String @id
   email        String @unique
-  password     String @db.VarChar(128)
-  accessToken  String @db.VarChar(128)
-  refreshToken String @db.VarChar(128)
-  createAt     DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  password     String
 }

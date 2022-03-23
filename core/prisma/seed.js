@@ -37,11 +37,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var client_1 = require("@prisma/client");
+var bcrypt_1 = require("bcrypt");
 var prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function () {
+        var passwordAdminHash;
         return __generator(this, function (_a) {
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, bcrypt_1.hash)(process.env.ADMIN_PASSWORD, 10)];
+                case 1:
+                    passwordAdminHash = _a.sent();
+                    return [4 /*yield*/, prisma.admin.upsert({
+                            where: {
+                                email: 'nikrainev@gmail.com'
+                            },
+                            update: {
+                                email: 'nikrainev@gmail.com',
+                                password: passwordAdminHash
+                            },
+                            create: {
+                                organizer_id: '0x5',
+                                email: 'nikrainev@gmail.com',
+                                password: passwordAdminHash
+                            }
+                        })];
+                case 2:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
         });
     });
 }

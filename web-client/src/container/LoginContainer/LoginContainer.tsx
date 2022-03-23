@@ -1,6 +1,5 @@
 import React from 'react';
 import { Login } from '../../component/Login';
-import styles from './LoginContainer.module.less';
 
 interface IProps {
 
@@ -10,7 +9,7 @@ interface IProps {
 const LoginContainer: React.FC<IProps> = ({}) => {
 
     return (
-        <div className={styles.cont}>
+        <div>
             <Login />
         </div>
     );

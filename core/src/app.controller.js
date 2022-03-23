@@ -6,15 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.AdminPostgresRepository = void 0;
+exports.AppController = void 0;
 var common_1 = require("@nestjs/common");
-var AdminPostgresRepository = /** @class */ (function () {
-    function AdminPostgresRepository(prismaService) {
-        this.prismaService = prismaService;
+var AppController = /** @class */ (function () {
+    function AppController(appService) {
+        this.appService = appService;
     }
-    AdminPostgresRepository = __decorate([
-        (0, common_1.Injectable)()
-    ], AdminPostgresRepository);
-    return AdminPostgresRepository;
+    AppController.prototype.getHello = function () {
+        return this.appService.getHello();
+    };
+    __decorate([
+        (0, common_1.Get)()
+    ], AppController.prototype, "getHello");
+    AppController = __decorate([
+        (0, common_1.Controller)()
+    ], AppController);
+    return AppController;
 }());
-exports.AdminPostgresRepository = AdminPostgresRepository;
+exports.AppController = AppController;

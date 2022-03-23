@@ -10,13 +10,13 @@ const publicRuntimeConfig = {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: false,
-  i18n,
+  swcMinify: false
 }
 
 module.exports = withLess({
     ...nextConfig,
     publicRuntimeConfig,
+    i18n,
     lessLoaderOptions: {
         /* ... */
     },

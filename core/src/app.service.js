@@ -6,19 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.AdminModule = void 0;
+exports.AppService = void 0;
 var common_1 = require("@nestjs/common");
-var auth_module_1 = require("./auth/auth.module");
-var AdminModule = /** @class */ (function () {
-    function AdminModule() {
+var AppService = /** @class */ (function () {
+    function AppService() {
     }
-    AdminModule = __decorate([
-        (0, common_1.Module)({
-            imports: [],
-            controllers: [],
-            providers: [auth_module_1.AuthModule]
-        })
-    ], AdminModule);
-    return AdminModule;
+    AppService.prototype.getHello = function () {
+        return 'Hello World!';
+    };
+    AppService = __decorate([
+        (0, common_1.Injectable)()
+    ], AppService);
+    return AppService;
 }());
-exports.AdminModule = AdminModule;
+exports.AppService = AppService;
