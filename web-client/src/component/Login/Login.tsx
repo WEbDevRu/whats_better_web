@@ -14,21 +14,18 @@ import {
 } from '../../const/NAMESPACES';
 
 interface IProps {
-
+    onLogin: ({ email, password }:{ email: string, password: string }) => void
 }
 
-
-const Login: React.FC<IProps> = ({}) => {
+const Login: React.FC<IProps> = ({
+    onLogin,
+}) => {
     const { t } = useTranslation(NS_AUTH);
     const { t: tc } = useTranslation(NS_COMMON);
 
     const handleFinish = (values:Record<string, string>) => {
-        console.log(values);
+        onLogin({ email: values.email, password: values.password });
     };
-
-    const [form] = Form.useForm();
-
-    console.log(form);
 
     return (
         <Card
