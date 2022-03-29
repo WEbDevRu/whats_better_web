@@ -11,8 +11,11 @@ import {
     Query,
     Req,
     Res,
+    UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
+import { LoginRequest } from './requests/login.request';
 
 @Controller('auth')
 export class AuthController {
@@ -21,9 +24,14 @@ export class AuthController {
         private readonly authService: AuthService,
     ) {}
 
+    //@UseGuards(AuthGuard('local'))
     @Put('/me')
-    async loginAdmin(@Req() req, @Res() res) {
-        const result = this.authService.loginAdmin({
+    async loginAdmin(
+        @Req() req,
+        @Res() res,
+        @Body() loginRequest:LoginRequest
+    ) {
+        const result = await this.authService.loginAdmin({
             req,
         });
 

@@ -6,7 +6,7 @@ import {
     UnprocessableEntityException, HttpStatus,
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { commonErrorsCodes } from '../common/erorrsCodes/common.errorsCodes';
+import { commonErrorsCodes } from '../common/errorsCodes/common.errorsCodes';
 
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
@@ -31,7 +31,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
             return super.catch(newException, host);
         }
 
-
+        console.log(exception);
         const r = new UnprocessableEntityException(commonErrorsCodes.unhandledError);
         const rr = r.getResponse();
 

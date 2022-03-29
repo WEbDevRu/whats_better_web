@@ -38,7 +38,7 @@ const Login: React.FC<IProps> = ({
                 onFinish={handleFinish}
             >
                 <Form.Item
-                    name='username'
+                    name='email'
                     rules={[{
                         required: true,
                         message: tc('formErrors.empty', { fieldName: t('loginForm.emailInput.placeholder') })

@@ -44,8 +44,14 @@ export const UserProvider = (props:PropsInterface) => {
         method: RequestMethods.Put
     });
 
-    const onLogin = () => {
-        onLoginMeRequest();
+    const onLogin = ({ email, password }:{email: string, password: string }) => {
+        console.log(email, password);
+        onLoginMeRequest({
+            data: {
+                emaill: email,
+                password
+            }
+        });
     };
 
     const onGetMe = () => {

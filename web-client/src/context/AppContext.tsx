@@ -6,11 +6,6 @@ import React, {
     Dispatch,
     SetStateAction,
 } from 'react';
-import { UserRole, UserRoles } from '../const/user/USER_ROLES';
-
-import { useRequest } from '../hooks/useRequest';
-import { AUTH_API_ME } from '../const/http/API_URLS';
-import { RequestMethods } from '../const/http';
 import { IAppState } from '../types/app';
 
 interface IContext {
