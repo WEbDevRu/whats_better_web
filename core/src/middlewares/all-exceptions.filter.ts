@@ -1,21 +1,19 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyReply } from 'fastify';
 import {
     Catch,
     ArgumentsHost,
     HttpException,
-    UnprocessableEntityException, HttpStatus,
+    UnprocessableEntityException,
+    HttpStatus,
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { commonErrorsCodes } from '../common/erorrsCodes/common.errorsCodes';
+import { commonErrorsCodes } from '../common/errorsCodes/common.errorsCodes';
 
 @Catch()
 export class AllExceptionsFilter extends BaseExceptionFilter {
     catch(exception: Error, host: ArgumentsHost): unknown {
         const h = host.switchToHttp();
         const res = h.getResponse<FastifyReply>();
-        const req = h.getRequest<FastifyRequest>();
-
-        const log = { req: req.raw };
 
         if (exception instanceof HttpException) {
             let newException;
@@ -30,7 +28,6 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
             return super.catch(newException, host);
         }
-
 
         const r = new UnprocessableEntityException(commonErrorsCodes.unhandledError);
         const rr = r.getResponse();

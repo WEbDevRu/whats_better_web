@@ -1,17 +1,17 @@
 import React from 'react';
 import { Login } from '../../component/Login';
 import styles from './LoginContainer.module.less';
-
-interface IProps {
-
-}
+import { useUser } from '../../context/UserContext';
 
 
-const LoginContainer: React.FC<IProps> = ({}) => {
+const LoginContainer: React.FC = ({}) => {
+    const { onLogin } = useUser();
 
     return (
         <div className={styles.cont}>
-            <Login />
+            <Login
+                onLogin={onLogin}
+            />
         </div>
     );
 };
