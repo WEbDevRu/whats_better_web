@@ -3,9 +3,11 @@ import {
     Injectable,
     ArgumentMetadata,
     BadRequestException,
+    UnprocessableEntityException,
 } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import { commonErrorsCodes } from '../common/errorsCodes/common.errorsCodes';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -16,8 +18,11 @@ export class ValidationPipe implements PipeTransform<any> {
         const object = plainToClass(metatype, value);
         const errors = await validate(object);
         if (errors.length > 0) {
-            console.log(errors);
-            throw new BadRequestException('Validation failed');
+            const errorsData = errors.map((error) => ({
+                property: error.property,
+                constraints: error.constraints,
+            }));
+            throw new BadRequestException({ ...commonErrorsCodes.validationError, data: errorsData});
         }
         return value;
     }

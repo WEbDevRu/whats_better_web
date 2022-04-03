@@ -1,25 +1,64 @@
-import { Injectable,  Inject, forwardRef } from '@nestjs/common';
-import { AdminWrongLoginOrPassword } from '../../../common/errors/admin.errors';
+import { Injectable, Inject, forwardRef, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { AdminRepository } from '../../../datasource/admin/adminRepository';
-import { LoginRequest } from './requests/login.request';
+import { VARS } from '../../../config/vars';
+import { TOKEN_TYPES } from '../../../common/const/TOKENS';
+import { AdminEntity } from '../entities/admin.entity';
+import { UserRoles } from '../../../common/const/USER_ROLES';
 
 @Injectable()
 export class AuthService {
     constructor(
         @Inject(forwardRef(() => AdminRepository))
         private readonly adminRepository: AdminRepository,
+        @Inject(forwardRef(() => JwtService))
+        private readonly jwtService: JwtService,
     ) {}
 
-    async loginAdmin({ req }:{ req: LoginRequest }): Promise<{ accessToken: string; }> {
-        const result = await this.adminRepository.findAdminByEmail({
-            email: req.email,
+    async loginAdmin({ user }): Promise<{
+        accessToken: string,
+        refreshToken: string,
+    }> {
+
+        const refreshToken = await this.jwtService.signAsync(
+            {
+                type: TOKEN_TYPES.ADMIN_REFRESH_TOKEN,
+                data: {
+                    adminId: user.id,
+                    email: user.email,
+                },
+            }, {
+                expiresIn: +VARS.adminRefreshTokenLiveTimeInSeconds * 1000,
+            });
+
+        const accessToken = await this.jwtService.signAsync(
+            {
+                type: TOKEN_TYPES.ADMIN_ACCESS_TOKEN,
+                data: {
+                    adminId: user.id,
+                    email: user.email,
+                },
+            }, {
+                expiresIn: +VARS.adminAccessTokenLiveTimeInSeconds * 1000,
+            });
+
+        await this.adminRepository.addAdminTokenSession({
+            adminId: user.id,
+            refreshToken: refreshToken,
         });
 
-        console.log(result);
-        //throw new Error();
-        throw new AdminWrongLoginOrPassword();
         return {
-            accessToken: 'token',
+            accessToken: accessToken,
+            refreshToken: refreshToken,
         };
+    }
+
+    @UseInterceptors(ClassSerializerInterceptor)
+    async getAdminMe({ admin }:{ admin: { adminId: string, userRole: UserRoles.Admin }}) {
+        const adminData = await this.adminRepository.findByAdminId({
+            adminId: admin.adminId,
+        });
+
+        return adminData;
     }
 }

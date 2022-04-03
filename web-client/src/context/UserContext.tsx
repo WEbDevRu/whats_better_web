@@ -48,7 +48,7 @@ export const UserProvider = (props:PropsInterface) => {
         console.log(email, password);
         onLoginMeRequest({
             data: {
-                emaill: email,
+                email: email,
                 password
             }
         });

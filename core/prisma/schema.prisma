@@ -8,7 +8,7 @@ generator client {
 }
 
 model Admin {
-  id            String          @id @db.Uuid @default(uuid())
+  id            String          @id @default(uuid()) @db.Uuid
   email         String          @unique
   password      String          @db.VarChar(128)
   createdAt     DateTime        @default(now())
@@ -17,9 +17,9 @@ model Admin {
 }
 
 model AdminSessions {
-  id          String   @id @db.Uuid @default(uuid())
-  admin       Admin    @relation(fields: [adminId], references: [id])
-  adminId     String   @db.Uuid
-  refeshToken String   @unique
-  createdAt   DateTime @default(now())
+  id           String   @id @default(uuid()) @db.Uuid
+  admin        Admin    @relation(fields: [adminId], references: [id])
+  adminId      String   @db.Uuid
+  refreshToken String   @unique
+  createdAt    DateTime @default(now())
 }

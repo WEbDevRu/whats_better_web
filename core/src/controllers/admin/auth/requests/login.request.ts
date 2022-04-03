@@ -7,3 +7,8 @@ export class LoginRequest {
     @IsNotEmpty()
     password: string;
 }
+
+export interface ILoginRequest {
+    email: string,
+    password: string,
+}
