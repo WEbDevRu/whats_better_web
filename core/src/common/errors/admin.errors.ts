@@ -1,5 +1,5 @@
 import { HttpStatus, HttpException } from '@nestjs/common';
-import { adminErrorsCodes } from '../erorrsCodes/admin.errorsCodes';
+import { adminErrorsCodes } from '../errorsCodes/admin.errorsCodes';
 
 
 export class AdminWrongLoginOrPassword extends HttpException {

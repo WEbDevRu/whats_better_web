@@ -1,5 +1,5 @@
 import { HttpStatus, HttpException } from '@nestjs/common';
-import { commonErrorsCodes } from '../erorrsCodes/common.errorsCodes';
+import { commonErrorsCodes } from '../errorsCodes/common.errorsCodes';
 
 
 export class CommonErrorsUnhandledError extends HttpException {

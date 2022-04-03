@@ -8,6 +8,7 @@ import styles from './Layout.module.less';
 import { isRoleMatch } from '../../../utils/user/isRoleMatch';
 import { UserRole } from '../../../const/user/USER_ROLES';
 import { useApp } from '../../../context/AppContext';
+import { useUser } from '../../../context/UserContext';
 
 interface PropsInterface {
     children?: ReactElement | ReactElement[],
@@ -27,8 +28,11 @@ const Layout = (props:PropsInterface) => {
 
     const {
         appState,
-        onGetMe,
     } = useApp();
+
+    const {
+        onGetMe,
+    } = useUser();
 
     const router = useRouter();
 
