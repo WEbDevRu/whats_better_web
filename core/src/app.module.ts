@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { PrismaPostgres } from './providers/database/prismaPostres';
 import { AdminModule } from './controllers/admin/admin.module';
-import { ComparisonCategoryService } from './controllers/comparisonCategory/comparisonCategory.service';
+import { ComparisonCategoryModule } from './controllers/comparisonCategory/comparisonCategory.module';
 import { AuthModule } from './controllers/admin/auth/auth.module';
 import { VARS } from './config/vars';
 import { JwtAuthGuard } from './middlewares/guards/jwt-auth.guard';
@@ -15,7 +15,7 @@ import { JwtStrategy } from './middlewares/guards/jwt.strategy';
     imports: [
         PassportModule,
         AdminModule,
-        ComparisonCategoryService,
+        ComparisonCategoryModule,
         RouterModule.register([{
             path: '',
             module: AdminModule,

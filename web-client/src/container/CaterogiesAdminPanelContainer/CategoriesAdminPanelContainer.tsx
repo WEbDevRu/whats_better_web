@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Breadcrumb } from 'antd';
 const { Content } = Layout;
 import styles from './CategoriesAdminPanelContainer.module.less';
-import { AdminPanel } from '../../component/AdminPanel/';
+import { Categories } from '../../component/AdminPanel/Categories';
 
 
 const CategoriesAdminPanelContainer: React.FC = ({}) => {
@@ -16,7 +16,7 @@ const CategoriesAdminPanelContainer: React.FC = ({}) => {
                     <Breadcrumb.Item>Bill</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                    <AdminPanel />
+                    <Categories />
                 </div>
             </Content>
         </Layout>

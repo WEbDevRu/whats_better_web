@@ -2,5 +2,20 @@
   "pages": {
     "main": "Main",
     "categories": "Categories"
+  },
+  "actions": {
+    "create": "Create"
+  },
+  "categories": {
+    "addCategory": "Add category",
+    "createCategory": "Create category",
+    "title": {
+      "label": "Title",
+      "placeholder": "Input label"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Input description"
+    }
   }
 }

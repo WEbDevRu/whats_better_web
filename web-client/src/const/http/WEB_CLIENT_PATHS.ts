@@ -1,2 +1,2 @@
 export const LOGIN  = '/login';
-export const CATEGORIES = '/comparisonCategory';
+export const CATEGORIES = '/categories';
