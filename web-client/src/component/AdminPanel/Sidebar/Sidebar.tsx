@@ -72,7 +72,7 @@ const Sidebar: React.FC<IProps> = ({
                         href={CATEGORIES}
                     >
                         <a href={CATEGORIES} >
-                            {t('pages.categories')}
+                            {t('pages.comparisonCategory')}
                         </a>
                     </Link>
                 </Menu.Item>

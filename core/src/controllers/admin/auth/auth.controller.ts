@@ -1,4 +1,17 @@
-import { Body, Controller, forwardRef, Get, HttpStatus, Inject, Put, Req, Res, UseGuards, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    forwardRef,
+    Get,
+    HttpStatus,
+    Inject,
+    Put,
+    Req,
+    Res,
+    UseGuards,
+    UseInterceptors,
+    ClassSerializerInterceptor,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../../../decorators/role.decorator';
 import { AuthService } from './auth.service';
