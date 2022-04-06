@@ -27,6 +27,7 @@ export async function sendHttpRequest(options: IOptions) {
                 headers,
                 onUploadProgress,
                 cancelToken,
+                withCredentials: true,
             })
             : await axios({
                 url,
@@ -36,6 +37,7 @@ export async function sendHttpRequest(options: IOptions) {
                 headers,
                 onUploadProgress,
                 cancelToken,
+                withCredentials: true,
             });
 
         return response.data;

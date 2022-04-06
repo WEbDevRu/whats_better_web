@@ -1,19 +1,17 @@
 import React from 'react';
 import styles from './AdminPanel.module.less';
 import { AddCategory } from './AddCategory';
+import { useCategories } from '../../../context/CategoriesContext';
 
-interface IProps {
 
-}
-
-const AdminPanel: React.FC<IProps> = ({
-
-}) => {
+const AdminPanel: React.FC = () => {
+    const { onAddCategory } = useCategories();
 
     return (
         <div>
-            <AddCategory />
-            Content
+            <AddCategory
+                onAddCategory={onAddCategory}
+            />
         </div>
     );
 };

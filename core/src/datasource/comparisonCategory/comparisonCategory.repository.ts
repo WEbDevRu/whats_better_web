@@ -5,12 +5,17 @@ import { PrismaPostgres } from '../../providers/database/prismaPostres';
 export class ComparisonCategoryRepository {
     constructor(private readonly prismaService: PrismaPostgres) {}
 
-    async findAdminByEmail({ email }:{
-        email: string,
+    async addCategory({
+        title,
+        description,
+    }: {
+        title: string,
+        description: string,
     }) {
-        return this.prismaService.admin.findFirst({
-            where: {
-                email: email,
+        return this.prismaService.comparisionCategory.create({
+            data: {
+                title: title,
+                description: description,
             },
         });
     }

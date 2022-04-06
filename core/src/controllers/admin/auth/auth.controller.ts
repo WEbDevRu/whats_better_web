@@ -58,6 +58,7 @@ export class AuthController {
             sameSite: 'strict',
             httpOnly: true,
             hostOnly: true,
+            path: '/',
         });
 
         res.cookie('accessToken', result.accessToken, {
@@ -65,6 +66,7 @@ export class AuthController {
             sameSite: 'strict',
             httpOnly: true,
             hostOnly: true,
+            path: '/',
         });
 
         return res.status(HttpStatus.OK).send(result);

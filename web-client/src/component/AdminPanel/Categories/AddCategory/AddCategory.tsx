@@ -1,31 +1,41 @@
 import React from 'react';
-import {
-    Button,
-    Modal,
-    Form,
-    Input,
-} from 'antd';
+import { Button, Form, Input, Modal, } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import styles from './AddCategory.module.less';
 import { useModal } from '../../../../hooks/useModal';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { NS_ADMIN_PANEL } from '../../../../const/NAMESPACES';
+import { IRequest, IResponse } from '../../../../hooks/useRequest';
+import { RequestStatuses } from '../../../../const/http';
 
 interface IProps {
-
+    onAddCategory: (data:IRequest) => Promise<IResponse>,
 }
 
 const AddCategory: React.FC<IProps> = ({
-
+    onAddCategory,
 }) => {
     const createModal = useModal();
     const [form] = Form.useForm();
 
     const { t } = useTranslation(NS_ADMIN_PANEL);
 
-    const handleSubmit = () => {
-        createModal.onToggle();
+    const handleSubmit = async () => {
         form.submit();
+    };
+    
+    const handleFinish = async (values:Record<string, string>) => {
+        createModal.onStartConfirmationLoading();
+        console.log(values);
+        const result = await onAddCategory({
+            data: {
+                title: values.title,
+                description: values.description,
+            }
+        });
+        if (result.status === RequestStatuses.Succeeded) {
+            createModal.onClose();
+        }
+        createModal.onClose();
     };
 
     return (
@@ -46,21 +56,24 @@ const AddCategory: React.FC<IProps> = ({
             >
                 <Form
                     layout="vertical"
+                    onFinish={handleFinish}
+                    form={form}
                 >
                     <Form.Item
                         label={t('categories.title.label')}
                         required
+                        name='title'
                     >
                         <Input placeholder={t('categories.title.placeholder')} />
                     </Form.Item>
                     <Form.Item
                         label={t('categories.description.label')}
+                        name='description'
                     >
                         <Input placeholder={t('categories.description.placeholder')} />
                     </Form.Item>
                 </Form>
             </Modal>
-            Content
         </>
     );
 };
