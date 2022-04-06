@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { AppProvider } from '../../context/AppContext';
 import { UserProvider } from '../../context/UserContext';
+import { CategoriesProvider } from '../../context/CategoriesContext';
 
 interface PropsAppContextProvider {
     children: ReactElement
@@ -11,7 +12,9 @@ const AppContextProvider: React.FC<PropsAppContextProvider> = ({ children }) => 
     return (
         <AppProvider>
             <UserProvider>
-                {children}
+                <CategoriesProvider>
+                    {children}
+                </CategoriesProvider>
             </UserProvider>
         </AppProvider>
     );

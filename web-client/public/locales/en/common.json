@@ -1,5 +1,6 @@
 {
-  "login": "L ogin",
+  "login": "Login",
+  "adminPanel": "Admin panel",
   "formErrors": {
     "empty": "Please enter field {{ fieldName }}"
   }

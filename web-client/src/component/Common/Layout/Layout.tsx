@@ -2,13 +2,14 @@ import React, {
     ReactElement,
     useEffect,
 } from 'react';
-import { Spin } from 'antd';
+import { Spin, Layout as LayoutAnt } from 'antd';
 import { useRouter } from 'next/router';
 import styles from './Layout.module.less';
 import { isRoleMatch } from '../../../utils/user/isRoleMatch';
 import { UserRole } from '../../../const/user/USER_ROLES';
 import { useApp } from '../../../context/AppContext';
 import { useUser } from '../../../context/UserContext';
+import { Sidebar } from '../../AdminPanel/Sidebar';
 
 interface PropsInterface {
     children?: ReactElement | ReactElement[],
@@ -66,9 +67,12 @@ const Layout = (props:PropsInterface) => {
     }
 
     return (
-        <div className={styles.root}>
+        <LayoutAnt style={{ minHeight: '100vh' }}>
+            {!isHideMenu && (
+                <Sidebar />
+            )}
             {children}
-        </div>
+        </LayoutAnt>
     );
 };
 

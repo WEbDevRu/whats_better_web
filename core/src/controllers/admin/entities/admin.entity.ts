@@ -6,8 +6,8 @@ export class AdminEntity {
     createdAt: Date;
     updatedAt: Date;
 
-    @Exclude({ toClassOnly: true })
-    password?: string;
+    @Exclude()
+    password: string;
 
     constructor(partial: Partial<AdminEntity>) {
         Object.assign(this, partial);

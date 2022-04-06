@@ -8,11 +8,11 @@ export enum RequestMethods {
 export type RequestMethod = `${RequestMethods}`;
 
 export enum RequestStatuses {
-    Initial,
-    Processing,
-    Succeeded,
-    Failed,
-    Unauthorized,
+    Initial = 'initial',
+    Processing = 'processing',
+    Succeeded = 'succeeded',
+    Failed = 'failed',
+    Unauthorized = 'unauthorized'
 }
 
 export type RequestStatus = `${RequestStatuses}`;

@@ -1,9 +1,8 @@
-import { Injectable, Inject, forwardRef, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AdminRepository } from '../../../datasource/admin/adminRepository';
 import { VARS } from '../../../config/vars';
 import { TOKEN_TYPES } from '../../../common/const/TOKENS';
-import { AdminEntity } from '../entities/admin.entity';
 import { UserRoles } from '../../../common/const/USER_ROLES';
 
 @Injectable()
@@ -53,7 +52,6 @@ export class AuthService {
         };
     }
 
-    @UseInterceptors(ClassSerializerInterceptor)
     async getAdminMe({ admin }:{ admin: { adminId: string, userRole: UserRoles.Admin }}) {
         const adminData = await this.adminRepository.findByAdminId({
             adminId: admin.adminId,
