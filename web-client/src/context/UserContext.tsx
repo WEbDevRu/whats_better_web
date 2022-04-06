@@ -1,17 +1,8 @@
-import React, {
-    createContext,
-    useContext,
-    ReactElement,
-    useState, useEffect,
-} from 'react';
-import { UserRole, UserRoles } from '../const/user/USER_ROLES';
-
-import { AppState } from '../const/app/types';
+import React, { createContext, ReactElement, useContext, useEffect, useState, } from 'react';
+import { UserRoles } from '../const/user/USER_ROLES';
 import { useRequest } from '../hooks/useRequest';
-import {
-    API_AUTH_ADMIN_ME,
-} from '../const/http/API_URLS';
-import { RequestMethods } from '../const/http';
+import { API_AUTH_ADMIN_ME, } from '../const/http/API_URLS';
+import { RequestMethods, RequestStatuses } from '../const/http';
 import { useApp } from './AppContext';
 import { IUser } from '../types/user';
 
@@ -59,10 +50,18 @@ export const UserProvider = (props:PropsInterface) => {
     };
 
     useEffect(() => {
-        setAppState({
-            isInit: true,
-            userRole: UserRoles.Guest
-        });
+        if (getMeRS.status === RequestStatuses.Succeeded) {
+            setAppState({
+                isInit: true,
+                userRole: UserRoles.Admin
+            });
+        }
+        if (getMeRS.status === RequestStatuses.Failed) {
+            setAppState({
+                isInit: true,
+                userRole: UserRoles.Guest
+            });
+        }
     }, [getMeRS.status]);
 
     return (

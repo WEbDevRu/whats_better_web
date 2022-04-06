@@ -8,7 +8,11 @@ import { UserRoles } from '../../const/user/USER_ROLES';
 
 const Home: NextPage = () => {
     return (
-        <Layout roles={UserRoles.Guest}>
+        <Layout
+            roles={UserRoles.Guest}
+            redirectPath={'/'}
+            isHideMenu
+        >
             <LoginContainer />
         </Layout>
     );
