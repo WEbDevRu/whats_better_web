@@ -19,4 +19,25 @@ export class ComparisonCategoryRepository {
             },
         });
     }
+
+    async getCategoriesWithPagination({
+        page,
+        limit,
+    }:{
+        page: number,
+        limit: number,
+    }) {
+        const result = await this.prismaService.$transaction([
+            this.prismaService.comparisionCategory.findMany({
+                skip: (page - 1)*limit,
+                take: limit,
+            }),
+            this.prismaService.comparisionCategory.count(),
+        ]);
+
+        return {
+            items: result[0],
+            totalItems: result[1],
+        };
+    }
 }

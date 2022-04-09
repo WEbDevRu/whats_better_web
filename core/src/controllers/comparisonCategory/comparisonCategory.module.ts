@@ -4,6 +4,7 @@ import { ComparisonCategoryService } from './comparisonCategory.service';
 import {
     ComparisonCategoryRepository,
 } from '../../datasource/comparisonCategory/comparisonCategory.repository';
+import { ParseIntPipe } from  '../../middlewares/parse-int.pipe';
 
 @Module({
     imports: [],
@@ -11,6 +12,7 @@ import {
     providers: [
         ComparisonCategoryService,
         ComparisonCategoryRepository,
+        ParseIntPipe,
     ],
     exports: [ComparisonCategoryService],
 })

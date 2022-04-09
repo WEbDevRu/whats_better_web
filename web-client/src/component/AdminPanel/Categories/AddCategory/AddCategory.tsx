@@ -3,12 +3,12 @@ import { Button, Form, Input, Modal, } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useModal } from '../../../../hooks/useModal';
 import { useTranslation } from '../../../../hooks/useTranslation';
-import { NS_ADMIN_PANEL } from '../../../../const/NAMESPACES';
+import { NS_ADMIN_PANEL, NS_COMMON } from '../../../../const/NAMESPACES';
 import { IRequest, IResponse } from '../../../../hooks/useRequest';
 import { RequestStatuses } from '../../../../const/http';
 
 interface IProps {
-    onAddCategory: (data:IRequest) => Promise<IResponse>,
+    onAddCategory: (data:IRequest) => Promise<Record<string, any>>,
 }
 
 const AddCategory: React.FC<IProps> = ({
@@ -18,6 +18,7 @@ const AddCategory: React.FC<IProps> = ({
     const [form] = Form.useForm();
 
     const { t } = useTranslation(NS_ADMIN_PANEL);
+    const { t:tc } = useTranslation(NS_COMMON);
 
     const handleSubmit = async () => {
         form.submit();
@@ -25,17 +26,18 @@ const AddCategory: React.FC<IProps> = ({
     
     const handleFinish = async (values:Record<string, string>) => {
         createModal.onStartConfirmationLoading();
-        console.log(values);
         const result = await onAddCategory({
             data: {
                 title: values.title,
                 description: values.description,
             }
         });
-        if (result.status === RequestStatuses.Succeeded) {
+        console.log(result);
+        if (result?.id) {
             createModal.onClose();
+            createModal.onStopConfirmationLoading();
+            form.resetFields();
         }
-        createModal.onClose();
     };
 
     return (
@@ -63,6 +65,10 @@ const AddCategory: React.FC<IProps> = ({
                         label={t('categories.title.label')}
                         required
                         name='title'
+                        rules={[{
+                            required: true,
+                            message: tc('formErrors.empty', { fieldName: t('categories.title.label') })
+                        }]}
                     >
                         <Input placeholder={t('categories.title.placeholder')} />
                     </Form.Item>

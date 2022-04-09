@@ -14,7 +14,6 @@ import {
 } from '../../const/NAMESPACES';
 import { ADMIN_WRONG_LOGIN_OR_PASSWORD } from '../../const/http/errors/AUTH_ERRORS_CODES';
 import { IResponse } from '../../hooks/useRequest';
-import { getTextFromResponseErrors } from '../../utils/http/getTextFromResponseErrors';
 import { useFieldResponseErrors } from '../../hooks/useFieldResponseErrors';
 
 interface IProps {
@@ -38,7 +37,7 @@ const Login: React.FC<IProps> = ({
         response: loginMeRS,
         expectedErrors: [{
             errorCode: ADMIN_WRONG_LOGIN_OR_PASSWORD,
-            errorText: 'wrongPass',
+            errorText: t('loginForm.errors.wrongLoginOrPassword'),
             fieldName: 'password'
         }]
     });

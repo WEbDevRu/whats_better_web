@@ -20,7 +20,7 @@ export interface IRequest {
     data?: Record<string, any>;
     formData?: Record<string, unknown>;
     id?: string;
-    params?: Record<string, string>;
+    params?: Record<string, string | number>;
 }
 
 interface IRequestOptions {
@@ -35,6 +35,7 @@ interface GetUrlOptions {
 export interface IResponseError {
     code: string,
     message?: string,
+    data?: any,
 }
 
 export interface IResponse {

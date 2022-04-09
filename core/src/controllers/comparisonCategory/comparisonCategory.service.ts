@@ -8,6 +8,7 @@ import {
 } from '../../datasource/comparisonCategory/comparisonCategory.repository';
 import { UserRoles } from '../../common/const/USER_ROLES';
 import { ICreateCategoryRequest } from './requests/createCategory.request';
+import { ILoadCategoriesRequest } from './requests/loadCategories.request';
 
 @Injectable()
 export class ComparisonCategoryService {
@@ -17,14 +18,26 @@ export class ComparisonCategoryService {
     ) {}
 
     async addCategory({ title, description }:ICreateCategoryRequest) {
-        const adminData = await this.comparisonCategoryRepository.addCategory({
+        const categoryData = await this.comparisonCategoryRepository.addCategory({
             title: title,
             description: description, 
         });
 
-        console.log(adminData);
+        return categoryData;
+    }
 
-        return adminData;
+
+    async loadCategoriesList({ page, limit }:ILoadCategoriesRequest) {
+        const list = await this.comparisonCategoryRepository.getCategoriesWithPagination({
+            page,
+            limit,
+        });
+        console.log(list);
+        return {
+            ...list,
+            page,
+            limit,
+        };
     }
 
 }
