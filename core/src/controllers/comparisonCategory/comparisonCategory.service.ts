@@ -9,6 +9,7 @@ import {
 import { UserRoles } from '../../common/const/USER_ROLES';
 import { ICreateCategoryRequest } from './requests/createCategory.request';
 import { ILoadCategoriesRequest } from './requests/loadCategories.request';
+import { IDeleteCategory } from './requests/deleteCategory.request';
 
 @Injectable()
 export class ComparisonCategoryService {
@@ -32,7 +33,7 @@ export class ComparisonCategoryService {
             page,
             limit,
         });
-        console.log(list);
+
         return {
             ...list,
             page,
@@ -40,4 +41,11 @@ export class ComparisonCategoryService {
         };
     }
 
+    async deleteCategory({ id }:IDeleteCategory) {
+        const result = await this.comparisonCategoryRepository.deleteCategoryById({
+            categoryId: id,
+        });
+
+        return result;
+    }
 }

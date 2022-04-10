@@ -11,6 +11,7 @@ const AdminPanel: React.FC = () => {
         onAddCategory,
         onLoadCategoriesList,
         categories,
+        onDeleteCategory,
     } = useCategories();
 
     return (
@@ -21,6 +22,7 @@ const AdminPanel: React.FC = () => {
             <CategoriesList
                 onLoadCategoriesList={onLoadCategoriesList}
                 categories={categories}
+                onDeleteCategory={onDeleteCategory}
             />
         </div>
     );

@@ -40,4 +40,16 @@ export class ComparisonCategoryRepository {
             totalItems: result[1],
         };
     }
+
+    async deleteCategoryById({
+        categoryId,
+    }:{
+        categoryId: string
+    }) {
+        return this.prismaService.comparisionCategory.delete({
+            where: {
+                id: categoryId,
+            }, 
+        });
+    }
 }

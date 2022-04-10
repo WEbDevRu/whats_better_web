@@ -5,9 +5,10 @@ import { RequestMethods, RequestStatuses } from '../const/http';
 import { CategoryPaginate } from '../types/categories';
 
 interface IContext {
-    onAddCategory: (data:IRequest) => Promise<IResponse>,
-    onLoadCategoriesList: (data:IRequest) => Promise<IResponse>,
+    onAddCategory: (data:IRequest) => Promise<Record<string, any>>,
+    onLoadCategoriesList: (data:IRequest) => Promise<Record<string, any>>,
     categories: CategoryPaginate,
+    onDeleteCategory: (data:IRequest) => Promise<Record<string, any>>
 };
 
 const CategoriesContext = createContext({} as IContext);
@@ -46,6 +47,14 @@ export const CategoriesProvider = (props:PropsInterface) => {
         method: RequestMethods.Get 
     });
 
+    const {
+        onRequest: onDeleteCategory,
+        state: deleteCategoryRS,
+    } = useRequest({
+        url: API_CATEGORIES_CATEGORY,
+        method: RequestMethods.Delete
+    });
+
     useEffect(() => {
         if (loadCategoriesListRS.status === RequestStatuses.Succeeded) {
             setCategories({
@@ -65,6 +74,7 @@ export const CategoriesProvider = (props:PropsInterface) => {
                 onAddCategory,
                 onLoadCategoriesList,
                 categories,
+                onDeleteCategory,
             }}
         >
             {children}

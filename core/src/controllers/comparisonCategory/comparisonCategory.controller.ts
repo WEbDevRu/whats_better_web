@@ -6,10 +6,12 @@ import {
     Inject,
     Req,
     Post,
+    Param,
     UseGuards,
     UseInterceptors,
     ClassSerializerInterceptor,
     Query,
+    Delete,
 } from '@nestjs/common';
 import { ComparisonCategoryService } from './comparisonCategory.service';
 import { Roles } from '../../decorators/role.decorator';
@@ -18,6 +20,8 @@ import { JwtAuthGuard } from '../../middlewares/guards/jwt-auth.guard';
 import { ComparisonCategoryEntity } from './entities/comparisonCategory.entity';
 import { CreateCategoryRequest } from './requests/createCategory.request';
 import { ParseIntPipe } from '../../middlewares/parse-int.pipe';
+import { LoadCategoriesRequest } from './requests/loadCategories.request';
+import { DeleteCategoryRequest } from './requests/deleteCategory.request';
 
 
 @Controller('categories')
@@ -49,7 +53,8 @@ export class ComparisonCategoryController {
     async loadCategoriesList(
         @Req() req,
         @Query('page', new ParseIntPipe()) page,
-        @Query('limit', new ParseIntPipe()) limit
+        @Query('limit', new ParseIntPipe()) limit,
+        @Query() loadCategoriesRequest:LoadCategoriesRequest
     ):Promise<any> {
 
         const result = await this.comparisonCategoryService.loadCategoriesList({
@@ -61,5 +66,18 @@ export class ComparisonCategoryController {
             ...result,
             items: result.items.map?.((category) => new ComparisonCategoryEntity(category)),
         };
+    }
+
+    @Roles(UserRoles.Admin)
+    @UseGuards(JwtAuthGuard)
+    @Delete('category/:id')
+    async deleteCategory(
+        @Req() req,
+        @Param() deleteCategoryRequest:DeleteCategoryRequest
+    ):Promise<any> {
+        const result = await this.comparisonCategoryService.deleteCategory({
+            id: req.params.id,
+        });
+        return  result;
     }
 }

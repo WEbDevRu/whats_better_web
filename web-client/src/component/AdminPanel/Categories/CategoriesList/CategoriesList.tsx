@@ -8,12 +8,14 @@ import { IRequest } from '../../../../hooks/useRequest';
 
 interface IProps {
     categories: CategoryPaginate,
-    onLoadCategoriesList: (data:IRequest) => Promise<Record<string, any>>
+    onLoadCategoriesList: (data:IRequest) => Promise<Record<string, any>>,
+    onDeleteCategory: (data:IRequest) => Promise<Record<string, any>>
 }
 
 const CategoriesList: React.FC<IProps> = ({
     categories,
     onLoadCategoriesList,
+    onDeleteCategory,
 }) => {
 
     const handlePaginationPageChange = (activePageNumber:number) => {
@@ -42,6 +44,7 @@ const CategoriesList: React.FC<IProps> = ({
                 <CategoryCard
                     key={category.id}
                     categoryData={category}
+                    onDeleteCategory={onDeleteCategory}
                 />
             ))}
             {categories.isInit && (
