@@ -5,12 +5,13 @@ import { useUser } from '../../context/UserContext';
 
 
 const LoginContainer: React.FC = ({}) => {
-    const { onLogin } = useUser();
+    const { onLogin, loginMeRS } = useUser();
 
     return (
         <div className={styles.cont}>
             <Login
                 onLogin={onLogin}
+                loginMeRS={loginMeRS}
             />
         </div>
     );

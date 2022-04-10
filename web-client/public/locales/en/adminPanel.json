@@ -9,6 +9,7 @@
   "categories": {
     "addCategory": "Add category",
     "createCategory": "Create category",
+    "deleteCategory": "Delete",
     "title": {
       "label": "Title",
       "placeholder": "Input label"

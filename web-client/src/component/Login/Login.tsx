@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Card,
     Form,
@@ -12,20 +12,40 @@ import {
     NS_AUTH,
     NS_COMMON,
 } from '../../const/NAMESPACES';
+import { ADMIN_WRONG_LOGIN_OR_PASSWORD } from '../../const/http/errors/AUTH_ERRORS_CODES';
+import { IResponse } from '../../hooks/useRequest';
+import { useFieldResponseErrors } from '../../hooks/useFieldResponseErrors';
 
 interface IProps {
-    onLogin: ({ email, password }:{ email: string, password: string }) => void
+    onLogin: ({ email, password }:{ email: string, password: string }) => void,
+    loginMeRS: IResponse,
 }
 
 const Login: React.FC<IProps> = ({
     onLogin,
+    loginMeRS,
 }) => {
     const { t } = useTranslation(NS_AUTH);
     const { t: tc } = useTranslation(NS_COMMON);
+    const [form] = Form.useForm();
 
     const handleFinish = (values:Record<string, string>) => {
         onLogin({ email: values.email, password: values.password });
     };
+
+    const { fieldErrors } = useFieldResponseErrors({
+        response: loginMeRS,
+        expectedErrors: [{
+            errorCode: ADMIN_WRONG_LOGIN_OR_PASSWORD,
+            errorText: t('loginForm.errors.wrongLoginOrPassword'),
+            fieldName: 'password'
+        }]
+    });
+
+    useEffect(() => {
+        form.setFields(fieldErrors);
+    }, [fieldErrors]);
+
 
     return (
         <Card
@@ -36,6 +56,7 @@ const Login: React.FC<IProps> = ({
                 name="normal_login"
                 initialValues={{ remember: true }}
                 onFinish={handleFinish}
+                form={form}
             >
                 <Form.Item
                     name='email'
@@ -60,7 +81,7 @@ const Login: React.FC<IProps> = ({
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
+                    <Button type="primary" htmlType="submit" >
                         {t('actions.login')}
                     </Button>
                 </Form.Item>

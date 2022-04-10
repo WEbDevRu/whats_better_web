@@ -1,0 +1,1 @@
+export const ADMIN_WRONG_LOGIN_OR_PASSWORD = 'admins__wrong_login_or_password';

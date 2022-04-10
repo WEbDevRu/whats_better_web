@@ -3,5 +3,10 @@
   "adminPanel": "Admin panel",
   "formErrors": {
     "empty": "Please enter field {{ fieldName }}"
+  },
+  "confirmation": {
+    "areYouSure": "Are you sure",
+    "yes": "Yes",
+    "no": "No"
   }
 }

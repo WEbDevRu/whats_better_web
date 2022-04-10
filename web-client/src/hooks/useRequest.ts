@@ -20,7 +20,7 @@ export interface IRequest {
     data?: Record<string, any>;
     formData?: Record<string, unknown>;
     id?: string;
-    params?: Record<string, string>;
+    params?: Record<string, string | number>;
 }
 
 interface IRequestOptions {
@@ -32,8 +32,14 @@ interface GetUrlOptions {
     url?: any
 }
 
+export interface IResponseError {
+    code: string,
+    message?: string,
+    data?: any,
+}
+
 export interface IResponse {
-    errors?: [Record<string, string>],
+    errors?: [IResponseError] | [],
     isProcessing?: boolean,
     request: IRequest,
     result: Record<string, any>,
@@ -57,7 +63,7 @@ const DEFAULT_STATE: IResponse = {
     status: RequestStatuses.Initial,
     isProcessing: false,
     result: {},
-    errors: [{}],
+    errors: [],
     request: {},
 };
 
@@ -110,7 +116,8 @@ export const useRequest = ({ url, method, withAbort, formatData }: IOptions) => 
             } catch (e:any) {
                 if (e?.name !== 'AbortError') {
                     let status = RequestStatuses.Failed;
-                    if (e?.statusCode === 401) {
+
+                    if (e[0]?.statusCode === 401) {
                         status = RequestStatuses.Unauthorized;
                     }
 
