@@ -1,7 +1,8 @@
 {
   "pages": {
     "main": "Main",
-    "categories": "Categories"
+    "categories": "Categories",
+    "comparisonEntities": "Comparison entities"
   },
   "actions": {
     "create": "Create"
