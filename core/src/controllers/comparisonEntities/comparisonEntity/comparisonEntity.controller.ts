@@ -18,10 +18,10 @@ import { ComparisonEntityService } from './comparisonEntity.service';
 import { UserRoles } from '../../../common/const/USER_ROLES';
 import { Roles } from '../../../decorators/role.decorator';
 import { JwtAuthGuard } from '../../../middlewares/guards/jwt-auth.guard';
-import { AddEntityCategoryRequest } from './requests/addEntityCategory.request';
-import { EditEntityCategoryRequest, EditEntityCategoryParamsRequest } from './requests/editEnitityCategory.request';
-import { DeleteEntityCategoryRequest } from './requests/deleteEntityCategory.request';
-import { LoadEntityCategoriesRequest } from './requests/loadEntityCategories.request';
+import { AddEntityCategoryRequest } from '../categories/requests/addEntityCategory.request';
+import { EditEntityCategoryRequest, EditEntityCategoryParamsRequest } from '../categories/requests/editEnitityCategory.request';
+import { DeleteEntityCategoryRequest } from '../categories/requests/deleteEntityCategory.request';
+import { LoadEntityCategoriesRequest } from '../categories/requests/loadEntityCategories.request';
 import { ParseIntPipe } from '../../../middlewares/parse-int.pipe';
 
 @Controller('categories')
@@ -31,47 +31,4 @@ export class ComparisonEntityController {
         @Inject(forwardRef(() => ComparisonEntityService))
         private readonly comparisonEntityService: ComparisonEntityService,
     ) {}
-
-    @Roles(UserRoles.Admin)
-    @UseGuards(JwtAuthGuard)
-    @Post('/')
-    async addEntityCategory(
-        @Req() req,
-        @Body() addEntityCategoryRequest:AddEntityCategoryRequest,
-    ):Promise<any> {
-
-    }
-
-    @Roles(UserRoles.Admin)
-    @UseGuards(JwtAuthGuard)
-    @Put('/:categoryId')
-    async editEntityCategory(
-        @Req() req,
-        @Body() editEntityCategoryRequest:EditEntityCategoryRequest,
-        @Param('categoryId') editEntityCategoryParamsRequest:EditEntityCategoryParamsRequest
-    ):Promise<any> {
-
-    }
-
-    @Roles(UserRoles.Admin)
-    @UseGuards(JwtAuthGuard)
-    @Delete('/:categoryId')
-    async deleteEntityCategory(
-        @Req() req,
-        @Body() deleteEntityCategoryRequest:DeleteEntityCategoryRequest
-    ):Promise<any> {
-
-    }
-
-    @Roles(UserRoles.Admin)
-    @UseGuards(JwtAuthGuard)
-    @Get('/')
-    async loadEntitiesCategoiries(
-        @Req() req,
-        @Query() loadEntityCategoriesRequest:LoadEntityCategoriesRequest,
-        @Query('page', new ParseIntPipe()) page,
-        @Query('limit', new ParseIntPipe()) limit,
-    ):Promise<any> {
-
-    }
 }
