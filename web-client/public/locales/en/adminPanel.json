@@ -1,10 +1,12 @@
 {
   "pages": {
     "main": "Main",
-    "categories": "Categories"
+    "categories": "Categories",
+    "comparisonEntities": "Comparison entities"
   },
   "actions": {
-    "create": "Create"
+    "create": "Create",
+    "add": "Add"
   },
   "categories": {
     "addCategory": "Add category",
@@ -13,6 +15,18 @@
     "title": {
       "label": "Title",
       "placeholder": "Input label"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Input description"
+    }
+  },
+  "comparisonEntitiesCategories": {
+    "entitiesCategories": "Entity categories",
+    "newCategory": "New category",
+    "name": {
+      "label": "name",
+      "placeholder": "Input name"
     },
     "description": {
       "label": "Description",

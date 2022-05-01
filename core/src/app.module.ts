@@ -5,17 +5,21 @@ import { PassportModule } from '@nestjs/passport';
 import { PrismaPostgres } from './providers/database/prismaPostres';
 import { AdminModule } from './controllers/admin/admin.module';
 import { ComparisonCategoryModule } from './controllers/comparisonCategory/comparisonCategory.module';
+import { ComparisonEntitiesModule } from './controllers/comparisonEntities/comparisonEntities.module';
 import { AuthModule } from './controllers/admin/auth/auth.module';
 import { VARS } from './config/vars';
 import { JwtAuthGuard } from './middlewares/guards/jwt-auth.guard';
 import { JwtStrategy } from './middlewares/guards/jwt.strategy';
+import { AdminRepository } from './datasource/admin/adminRepository';
 
 @Global()
 @Module({
     imports: [
         PassportModule,
         AdminModule,
+        AdminRepository,
         ComparisonCategoryModule,
+        ComparisonEntitiesModule,
         RouterModule.register([{
             path: '',
             module: AdminModule,
@@ -36,6 +40,7 @@ import { JwtStrategy } from './middlewares/guards/jwt.strategy';
         JwtModule,
         JwtAuthGuard,
         JwtStrategy,
+        AdminRepository,
     ],
     exports: [
         PrismaPostgres,
@@ -43,6 +48,7 @@ import { JwtStrategy } from './middlewares/guards/jwt.strategy';
         PassportModule,
         JwtAuthGuard,
         JwtStrategy,
+        AdminRepository,
     ],
 })
 export class AppModule {}

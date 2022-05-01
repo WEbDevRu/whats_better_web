@@ -6,6 +6,7 @@ import {
     ProfileOutlined,
     PieChartOutlined,
     SettingOutlined,
+    AppstoreAddOutlined,
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
@@ -14,7 +15,10 @@ import styles from './Sidebar.module.less';
 
 import { NS_ADMIN_PANEL, NS_COMMON } from '../../../const/NAMESPACES';
 import { useTranslation } from '../../../hooks/useTranslation';
-import { CATEGORIES } from '../../../const/http/WEB_CLIENT_PATHS';
+import {
+    CATEGORIES,
+    COMPARISON_ENTITIES,
+} from '../../../const/http/WEB_CLIENT_PATHS';
 
 interface IProps {
 
@@ -31,13 +35,15 @@ const Sidebar: React.FC<IProps> = ({
     const [selectedItemKey, setSelectedItemKey] = useState<string>('1');
 
     useEffect(() => {
-        if (router.pathname === '/') {
+        if (router.pathname === '') {
             setSelectedItemKey('1');
         }
         if (router.pathname === CATEGORIES) {
             setSelectedItemKey('2');
         }
-        console.log(router.pathname);
+        if (router.pathname === COMPARISON_ENTITIES) {
+            setSelectedItemKey('3');
+        }
     }, [router.pathname]);
 
     return (
@@ -73,6 +79,13 @@ const Sidebar: React.FC<IProps> = ({
                     >
                         <a href={CATEGORIES} >
                             {t('pages.categories')}
+                        </a>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key='3' icon={<AppstoreAddOutlined />}>
+                    <Link href={COMPARISON_ENTITIES}>
+                        <a href={COMPARISON_ENTITIES}>
+                            {t('pages.comparisonEntities')}
                         </a>
                     </Link>
                 </Menu.Item>

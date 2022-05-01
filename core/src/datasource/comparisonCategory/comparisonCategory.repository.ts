@@ -12,7 +12,7 @@ export class ComparisonCategoryRepository {
         title: string,
         description: string,
     }) {
-        return this.prismaService.comparisionCategory.create({
+        return this.prismaService.comparisonCategory.create({
             data: {
                 title: title,
                 description: description,
@@ -28,11 +28,11 @@ export class ComparisonCategoryRepository {
         limit: number,
     }) {
         const result = await this.prismaService.$transaction([
-            this.prismaService.comparisionCategory.findMany({
+            this.prismaService.comparisonCategory.findMany({
                 skip: (page - 1)*limit,
                 take: limit,
             }),
-            this.prismaService.comparisionCategory.count(),
+            this.prismaService.comparisonCategory.count(),
         ]);
 
         return {
@@ -46,7 +46,7 @@ export class ComparisonCategoryRepository {
     }:{
         categoryId: string
     }) {
-        return this.prismaService.comparisionCategory.delete({
+        return this.prismaService.comparisonCategory.delete({
             where: {
                 id: categoryId,
             }, 

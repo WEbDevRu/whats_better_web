@@ -35,4 +35,36 @@ export class AdminRepository {
             },
         });
     }
+
+    async getAdminTokenSession({ adminId, refreshToken }: {
+        adminId: string
+        refreshToken: string,
+    }) {
+        return this.prismaService.adminSessions.findFirst({
+            where: {
+                adminId: adminId,
+                refreshToken: refreshToken,
+            },
+        });
+    }
+
+    deleteAdminTokenSessionSync({ refreshToken }:{ refreshToken: string }) {
+        return this.prismaService.adminSessions.delete({
+            where: {
+                refreshToken: refreshToken,
+            },
+        });
+    }
+
+    addAdminTokenSessionSync({ adminId, refreshToken }:{
+        adminId: string,
+        refreshToken: string,
+    }) {
+        return this.prismaService.adminSessions.create({
+            data: {
+                adminId: adminId,
+                refreshToken: refreshToken,
+            },
+        });
+    }
 }

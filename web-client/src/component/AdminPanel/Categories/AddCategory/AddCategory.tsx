@@ -32,7 +32,6 @@ const AddCategory: React.FC<IProps> = ({
                 description: values.description,
             }
         });
-        console.log(result);
         if (result?.id) {
             createModal.onClose();
             createModal.onStopConfirmationLoading();
