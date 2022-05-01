@@ -30,7 +30,6 @@ export const useFieldResponseErrors = (
             RequestStatuses.Failed
         ].includes(response.status)) {
             const responseErrors = response.errors as [] | [IResponseError];
-            console.log(responseErrors);
             if (Array.isArray(responseErrors) && responseErrors) {
                 const fieldsErrors = responseErrors.reduce((totalFieldErrors:IFieldError[], currentError:IResponseError) => {
                     const foundExpectedErrors = expectedErrors?.filter((expectedError) =>
@@ -38,13 +37,10 @@ export const useFieldResponseErrors = (
                     );
 
                     const totalFieldsErrorsCopy = [...totalFieldErrors] || [];
-                    console.log(foundExpectedErrors);
 
                     foundExpectedErrors?.map((err) => {
-                        console.log(totalFieldsErrorsCopy);
                         const fieldNameIndex = totalFieldsErrorsCopy.findIndex((fieldError) => fieldError.name === err.fieldName);
 
-                        console.log(fieldNameIndex);
                         if (fieldNameIndex === -1) {
                             totalFieldsErrorsCopy.push({
                                 name: err.fieldName,

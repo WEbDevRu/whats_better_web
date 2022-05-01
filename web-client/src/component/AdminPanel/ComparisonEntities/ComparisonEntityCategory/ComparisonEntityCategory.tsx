@@ -30,10 +30,6 @@ const ComparisonEntityCategory: React.FC = () => {
         });
     },[]);
 
-    useEffect(() => {
-        console.log(entityCategoriesPaginate);
-    }, [entityCategoriesPaginate]);
-
 
     const { t } = useTranslation(NS_ADMIN_PANEL);
     const { t:tc } = useTranslation(NS_COMMON);
