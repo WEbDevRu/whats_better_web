@@ -10,12 +10,14 @@ import { AuthModule } from './controllers/admin/auth/auth.module';
 import { VARS } from './config/vars';
 import { JwtAuthGuard } from './middlewares/guards/jwt-auth.guard';
 import { JwtStrategy } from './middlewares/guards/jwt.strategy';
+import { AdminRepository } from './datasource/admin/adminRepository';
 
 @Global()
 @Module({
     imports: [
         PassportModule,
         AdminModule,
+        AdminRepository,
         ComparisonCategoryModule,
         ComparisonEntitiesModule,
         RouterModule.register([{
@@ -38,6 +40,7 @@ import { JwtStrategy } from './middlewares/guards/jwt.strategy';
         JwtModule,
         JwtAuthGuard,
         JwtStrategy,
+        AdminRepository,
     ],
     exports: [
         PrismaPostgres,
@@ -45,6 +48,7 @@ import { JwtStrategy } from './middlewares/guards/jwt.strategy';
         PassportModule,
         JwtAuthGuard,
         JwtStrategy,
+        AdminRepository,
     ],
 })
 export class AppModule {}

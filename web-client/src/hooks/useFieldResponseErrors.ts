@@ -29,37 +29,40 @@ export const useFieldResponseErrors = (
             RequestStatuses.Succeeded,
             RequestStatuses.Failed
         ].includes(response.status)) {
-            const responseErrors = response.errors;
-            const fieldsErrors = responseErrors?.reduce((totalFieldErrors:IFieldError[], currentError:IResponseError) => {
-                const foundExpectedErrors = expectedErrors?.filter((expectedError) =>
-                    expectedError.errorCode === currentError.code
-                );
+            const responseErrors = response.errors as [] | [IResponseError];
+            console.log(responseErrors);
+            if (Array.isArray(responseErrors) && responseErrors) {
+                const fieldsErrors = responseErrors.reduce((totalFieldErrors:IFieldError[], currentError:IResponseError) => {
+                    const foundExpectedErrors = expectedErrors?.filter((expectedError) =>
+                        expectedError.errorCode === currentError.code
+                    );
 
-                const totalFieldsErrorsCopy = [...totalFieldErrors] || [];
-                console.log(foundExpectedErrors);
-                
-                foundExpectedErrors?.map((err) => {
-                    console.log(totalFieldsErrorsCopy);
-                    const fieldNameIndex = totalFieldsErrorsCopy.findIndex((fieldError) => fieldError.name === err.fieldName);
+                    const totalFieldsErrorsCopy = [...totalFieldErrors] || [];
+                    console.log(foundExpectedErrors);
 
-                    console.log(fieldNameIndex);
-                    if (fieldNameIndex === -1) {
-                        totalFieldsErrorsCopy.push({
-                            name: err.fieldName,
-                            errors: err.errorText ? [err.errorText] : []
-                        });
-                    } else if (err.errorText) {
-                        let fieldErrorsCopy = totalFieldsErrorsCopy[fieldNameIndex].errors;
-                        fieldErrorsCopy = [...fieldErrorsCopy, err.errorText];
+                    foundExpectedErrors?.map((err) => {
+                        console.log(totalFieldsErrorsCopy);
+                        const fieldNameIndex = totalFieldsErrorsCopy.findIndex((fieldError) => fieldError.name === err.fieldName);
 
-                        totalFieldsErrorsCopy[fieldNameIndex].errors = fieldErrorsCopy;
-                    }
-                });
+                        console.log(fieldNameIndex);
+                        if (fieldNameIndex === -1) {
+                            totalFieldsErrorsCopy.push({
+                                name: err.fieldName,
+                                errors: err.errorText ? [err.errorText] : []
+                            });
+                        } else if (err.errorText) {
+                            let fieldErrorsCopy = totalFieldsErrorsCopy[fieldNameIndex].errors;
+                            fieldErrorsCopy = [...fieldErrorsCopy, err.errorText];
 
-                return totalFieldsErrorsCopy;
-            }, [] as IFieldError[]);
+                            totalFieldsErrorsCopy[fieldNameIndex].errors = fieldErrorsCopy;
+                        }
+                    });
 
-            setFieldErrors(fieldsErrors);
+                    return totalFieldsErrorsCopy;
+                }, [] as IFieldError[]);
+
+                setFieldErrors(fieldsErrors);
+            }
         }
     }, [response.status]);
 

@@ -9,6 +9,6 @@ services:
       - POSTGRES_PASSWORD=password123
       - POSTGRES_DB=my_database
     volumes:
-      - postres/data:/var/lib/postgresql/data
+      - /postresql/data:/var/lib/postgresql/data
     ports:
       - "15432:5432"

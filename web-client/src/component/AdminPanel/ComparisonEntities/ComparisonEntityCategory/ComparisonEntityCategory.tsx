@@ -6,15 +6,34 @@ import {
     Form,
     // eslint-disable-next-line import/named
     InputRef,
-    Button,
+    Button, Typography,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { NS_ADMIN_PANEL, NS_COMMON } from '../../../../const/NAMESPACES';
 import styles from './ComparisonEntityCategory.module.less';
+import { useComparisonEntity } from '../../../../context/ComparisonEntityContext';
+
+const PAGE_SIZE = 200;
 
 const ComparisonEntityCategory: React.FC = () => {
+    const {
+        onLoadEntitiesCategories,
+        entityCategoriesPaginate,
+    } = useComparisonEntity();
     const [form] = Form.useForm();
+
+    useEffect(() => {
+        onLoadEntitiesCategories({
+            limit: PAGE_SIZE,
+            page: 0,
+        });
+    },[]);
+
+    useEffect(() => {
+        console.log(entityCategoriesPaginate);
+    }, [entityCategoriesPaginate]);
+
 
     const { t } = useTranslation(NS_ADMIN_PANEL);
     const { t:tc } = useTranslation(NS_COMMON);
@@ -71,6 +90,11 @@ const ComparisonEntityCategory: React.FC = () => {
 
     return (
         <div>
+            <Typography.Title
+                level={2}
+            >
+                {t('comparisonEntitiesCategories.entitiesCategories')}
+            </Typography.Title>
             <>
                 <div style={{ marginBottom: 16 }}>
                     <TweenOneGroup
@@ -80,7 +104,7 @@ const ComparisonEntityCategory: React.FC = () => {
                             type: 'from',
                             duration: 100,
                         }}
-                        onEnd={e => {
+                        onEnd={(e) => {
                             if (e.type === 'appear' || e.type === 'enter') {
                                 if (e.target && e.target.style) {
                                     e.target.style = 'display: inline-block';
