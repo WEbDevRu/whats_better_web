@@ -54,7 +54,6 @@ const Login: React.FC<IProps> = ({
         >
             <Form
                 name="normal_login"
-                initialValues={{ remember: true }}
                 onFinish={handleFinish}
                 form={form}
             >

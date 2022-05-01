@@ -24,10 +24,46 @@ model AdminSessions {
   createdAt    DateTime @default(now())
 }
 
-model ComparisionCategory {
-  id            String    @id @default(uuid()) @db.Uuid
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  title         String    @db.VarChar(128)
-  description   String    @default("")
+model ComparisonCategory {
+  id          String   @id @default(uuid()) @db.Uuid
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String   @db.VarChar(128)
+  description String   @default("")
+}
+
+model ComparisonEntity {
+  id                                        String                                      @id @default(uuid()) @db.Uuid
+  createdAt                                 DateTime                                    @default(now())
+  updatedAt                                 DateTime                                    @updatedAt
+  title                                     String                                      @db.VarChar(128)
+  description                               String                                      @default("")
+  type                                      ComparisonEntityType
+  link                                      String
+  ComparisonEntity_ComparisonEntityCategory ComparisonEntity_ComparisonEntityCategory[]
+}
+
+model ComparisonEntity_ComparisonEntityCategory {
+  id                         String                   @id @default(uuid()) @db.Uuid
+  createdAt                  DateTime                 @default(now())
+  updatedAt                  DateTime                 @updatedAt
+  comparisonEntity           ComparisonEntity         @relation(fields: [comparisonEntityId], references: [id])
+  comparisonEntityId         String                   @db.Uuid @map("comparison_entity-constraint")
+  comparisonEntityCategory   ComparisonEntityCategory @relation(fields: [comparisonEntityCategoryId], references: [id])
+  comparisonEntityCategoryId String                   @db.Uuid @map("comparis_entity_category-constraint")
+}
+
+model ComparisonEntityCategory {
+  id                                        String                                      @id @default(uuid()) @db.Uuid
+  createdAt                                 DateTime                                    @default(now())
+  updatedAt                                 DateTime                                    @updatedAt
+  title                                     String                                      @db.VarChar(128)
+  description                               String                                      @default("")
+  ComparisonEntity_ComparisonEntityCategory ComparisonEntity_ComparisonEntityCategory[]
+}
+
+enum ComparisonEntityType {
+  INTAGRATED_VIDEO
+  IMAGE
+  TEXT
 }

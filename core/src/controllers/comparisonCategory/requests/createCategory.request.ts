@@ -1,9 +1,8 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateCategoryRequest {
     @IsNotEmpty()
     title: string;
-
 }
 
 export interface ICreateCategoryRequest {

@@ -14,6 +14,6 @@ import { ParseIntPipe } from  '../../middlewares/parse-int.pipe';
         ComparisonCategoryRepository,
         ParseIntPipe,
     ],
-    exports: [ComparisonCategoryService],
+    exports: [],
 })
 export class ComparisonCategoryModule {}
