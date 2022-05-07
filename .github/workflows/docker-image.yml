@@ -14,4 +14,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker-compose --compatibility  -f ../../deploy/staging/docker-compose.develop.yml up -d --build --remove-orphans
+        run: docker-compose --compatibility  -f ./deploy/staging/docker-compose.develop.yml up -d --build --remove-orphans
