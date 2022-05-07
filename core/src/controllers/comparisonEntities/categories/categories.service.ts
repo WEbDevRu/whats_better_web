@@ -35,13 +35,13 @@ export class ComparisonEntityCategoryService {
     }
 
     async deleteEntityCategory({ entityCategoryId }:IDeleteEntityCategory) {
-        return this.comparisonEntityCategoryRepository.removeComparisonEntityCategoryById({
+        return await this.comparisonEntityCategoryRepository.removeComparisonEntityCategoryById({
             entityCategoryId,
         });
     }
 
     async loadEntityCategories({ page, limit }:ILoadEntityCategoriesRequest) {
-        const list = this.comparisonEntityCategoryRepository.getComparisonEntityCategoriesWithPagination({
+        const list = await this.comparisonEntityCategoryRepository.getComparisonEntityCategoriesWithPagination({
             page,
             limit,
         });
