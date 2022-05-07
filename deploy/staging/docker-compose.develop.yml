@@ -1,0 +1,46 @@
+version: "3.6"
+
+services:
+  auth-postgres:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=my_user
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=my_database
+    volumes:
+      - /postresql/data:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+
+  core:
+    build:
+      context: ../../services/core
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - POSTGRES_URL=postgres://my_user:password123@localhost:15432/my_database
+      - JWT_SALT=df45rg
+      - COOKIE_SALT=svl43vklg3
+      - PORT=3001
+      - ADMIN_EMAIL=nikrainev@gmail.com
+      - ADMIN_PASSWORD=dsferg!34
+      - ADMIN_ACCESS_TOKEN_LIVE_TIME_IN_SECONDS=1800
+      - ADMIN_REFRESH_TOKEN_LIVE_TIME_IN_SECONDS=2592000
+    depends_on:
+      - auth-postgres
+    links:
+      - auth-postgres
+    ports:
+      - "3001:3001"
+
+  web-client:
+    build:
+      context: ../../services/web-client
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - APP_ENV=develop
+    ports:
+      - "3000:3000"
+
