@@ -6,7 +6,10 @@ import {
     Form,
     // eslint-disable-next-line import/named
     InputRef,
-    Button, Typography,
+    Button,
+    Typography,
+    Tooltip,
+    Spin,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useTranslation } from '../../../../hooks/useTranslation';
@@ -20,13 +23,15 @@ const ComparisonEntityCategory: React.FC = () => {
     const {
         onLoadEntitiesCategories,
         entityCategoriesPaginate,
+        onAddEntityCategory,
+        onDeleteEntityCategory,
     } = useComparisonEntity();
     const [form] = Form.useForm();
 
     useEffect(() => {
         onLoadEntitiesCategories({
             limit: PAGE_SIZE,
-            page: 0,
+            page: 1,
         });
     },[]);
 
@@ -41,14 +46,6 @@ const ComparisonEntityCategory: React.FC = () => {
     });
 
     const saveInputRef = useRef<InputRef>(null);
-
-    const handleClose = (removedTag:string) => {
-        const tags = tagsState.tags.filter(tag => tag !== removedTag);
-        setTagsState((c) => ({
-            ...c,
-            tags
-        }));
-    };
 
     useEffect(() => {
         if (tagsState.inputVisible) {
@@ -70,12 +67,19 @@ const ComparisonEntityCategory: React.FC = () => {
         }));
     };
 
-    const handleInputConfirm = () => {
+    const handleInputConfirm = (values:Record<string, string>) => {
         const { inputValue } = tagsState;
         let { tags } = tagsState;
         if (inputValue && tags.indexOf(inputValue) === -1) {
             tags = [...tags, inputValue];
         }
+
+        onAddEntityCategory({
+            title: values.title,
+            description: values.description,
+        });
+
+        form.resetFields();
 
         setTagsState({
             tags,
@@ -110,17 +114,28 @@ const ComparisonEntityCategory: React.FC = () => {
                         leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
                         appear={false}
                     >
-                        {tagsState.tags.map((tag) => (
-                            <span key={tag} style={{ display: 'inline-block' }}>
-                                <Tag
-                                    closable
-                                    onClose={e => {
-                                        e.preventDefault();
-                                        handleClose(tag);
-                                    }}
-                                >
-                                    {tag}
-                                </Tag>
+                        {entityCategoriesPaginate.items.map((category) => (
+                            <span
+                                key={category.id}
+                                style={{ display: 'inline-block' }}
+                            >
+                                <Tooltip placement="topLeft" title={category.description}>
+                                    <Tag
+                                        closable={!category.isFetching}
+                                        onClose={e => {
+                                            e.preventDefault();
+                                            onDeleteEntityCategory({ comparisonEntityCategoryId: category.id as string });
+                                        }}
+                                    >
+                                        {category.title}
+                                        {category.isFetching && (
+                                            <Spin
+                                                size='small'
+                                            />
+                                        )}
+                                    </Tag>
+                                </Tooltip>
+
                             </span>
                         ))}
                     </TweenOneGroup>
@@ -132,7 +147,7 @@ const ComparisonEntityCategory: React.FC = () => {
                         form={form}
                     >
                         <Form.Item
-                            name='name'
+                            name='title'
                             rules={[{
                                 required: true,
                                 message: tc('formErrors.empty', { fieldName: t('comparisonEntitiesCategories.name.label') })

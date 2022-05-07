@@ -68,13 +68,13 @@ export class ComparisonEntityCategoryController {
 
     @Roles(UserRoles.Admin)
     @UseGuards(JwtAuthGuard)
-    @Delete('/:categoryId')
+    @Delete('/:entityCategoryId')
     async deleteEntityCategory(
-        @Req() req,
-        @Param('categoryId') deleteEntityCategoryRequest:DeleteEntityCategoryRequest
+        @Param() params,
+        @Param() deleteEntityCategoryRequest:DeleteEntityCategoryRequest,
     ):Promise<any> {
         const result = await this.comparisonEntityCategoryService.deleteEntityCategory({
-            entityCategoryId: req.param.entityCategoryId, 
+            entityCategoryId: params.entityCategoryId,
         });
 
         return new ComparisonEntityCategoryEntity(result);

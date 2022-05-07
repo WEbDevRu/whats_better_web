@@ -1,16 +1,17 @@
 import React, { createContext, ReactElement, useContext, useEffect, useState } from 'react';
 import {
+    IAddComparisonEntityCategory,
+    IComparisonEntityCategory,
     IComparisonEntityCategoryPaginate,
-    ILoadComparisonEntitiesCategories,
     IDeleteComparisonEntityCategory,
     IEditComparisonEntityCategory,
-    IAddComparisonEntityCategory,
+    ILoadComparisonEntitiesCategories,
+    IComparisonEntityCategoryPaginateItem,
 } from '../types/comparisonEntity';
 
 import { useRequest } from '../hooks/useRequest';
 import { API_COMPARISON_ENTITIES } from '../const/http/API_URLS';
-import { RequestMethods } from '../const/http';
-import { PAGINATION_PAGE_SIZE } from '../component/AdminPanel/Categories/Categories';
+import { RequestMethods, RequestStatuses } from '../const/http';
 
 interface IContext {
     entityCategoriesPaginate: IComparisonEntityCategoryPaginate,
@@ -29,7 +30,7 @@ interface PropsInterface {
 
 export const ComparisonEntityProvider = (props:PropsInterface) => {
     const { children } = props;
-    const [entityCategoriesPaginate, setIntityCategoriesPaginate] = useState<IComparisonEntityCategoryPaginate>({
+    const [entityCategoriesPaginate, setEntityCategoriesPaginate] = useState<IComparisonEntityCategoryPaginate>({
         items: [],
         totalItems: undefined,
         limit: undefined,
@@ -75,7 +76,12 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
     }, []);
 
     const onAddEntityCategory = (data:IAddComparisonEntityCategory) => {
-
+        onAddEntitiesCategory({
+            data: {
+                name: data.title,
+                description: data.description,
+            }
+        });
     };
 
     const onEditEntityCategory = (data:IEditComparisonEntityCategory) => {
@@ -83,7 +89,20 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
     };
 
     const onDeleteEntityCategory = (data:IDeleteComparisonEntityCategory) => {
-
+        onDeleteEntitiesCategory({
+            id: data.comparisonEntityCategoryId,
+        });
+        
+        setEntityCategoriesPaginate((c) => {
+            const itemIndex = c.items.findIndex((item) => item.id === data.comparisonEntityCategoryId);
+            if (itemIndex !== -1) {
+                const currentCopy = { ...c };
+                currentCopy.items[itemIndex].isFetching = true;
+                return  currentCopy;
+            };
+            
+            return c; 
+        });
     };
 
     const onLoadEntitiesCategories = (data:ILoadComparisonEntitiesCategories) => {
@@ -93,11 +112,59 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
                 limit: data.limit,
             }
         });
-        setIntityCategoriesPaginate((c) => ({
+        setEntityCategoriesPaginate((c) => ({
             ...c,
             isFetching: true,
         }));
     };
+
+    useEffect(() => {
+        if (entitiesCategoriesResponse.status === RequestStatuses.Succeeded) {
+            console.log('here 1');
+            setEntityCategoriesPaginate({
+                items: entitiesCategoriesResponse.result.items?.map((item:IComparisonEntityCategory) => ({ ...item, isFetching: false })),
+                totalItems: entitiesCategoriesResponse.result.totalItems,
+                limit: entitiesCategoriesResponse.result.limit,
+                page: entitiesCategoriesResponse.result.page,
+                isInit: true,
+                isFetching: true,
+            });
+        }
+    }, [entitiesCategoriesResponse.status]);
+
+    useEffect(() => {
+        if (deleteEntitiesCategoryResponse.status === RequestStatuses.Succeeded) {
+            setEntityCategoriesPaginate((c) => {
+                const itemIndex = c.items.findIndex((item) => item.id === deleteEntitiesCategoryResponse.result.id);
+                if (itemIndex !== -1) {
+                    const currentCopy = { ...c };
+                    currentCopy.items.splice(itemIndex, 1);
+                    return {
+                        ...currentCopy,
+                        totalItems: c.totalItems ? c?.totalItems - 1 : 0
+                    };
+                };
+
+                return c;
+            });
+        }
+    }, [deleteEntitiesCategoryResponse.status]);
+
+    useEffect(() => {
+        if (addEntitiesCategoryResponse.status === RequestStatuses.Succeeded) {
+            setEntityCategoriesPaginate((c) => {
+                const currentCopy = { ...c };
+
+                const newItem = { ...addEntitiesCategoryResponse.result, isFetching: false } as IComparisonEntityCategoryPaginateItem
+                currentCopy.items = [newItem, ...currentCopy.items];
+
+                return {
+                    ...currentCopy,
+                    totalItems: c.totalItems ? c?.totalItems + 1 : 1
+                };
+            });
+        }
+    }, [addEntitiesCategoryResponse.status]);
 
 
     return (
