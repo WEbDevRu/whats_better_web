@@ -1,6 +1,6 @@
 export interface IComparisonEntityCategory {
     id?: string,
-    name: string,
+    title: string,
     description?: string,
     createdAt?: string,
     updatedAt?: string,
@@ -10,7 +10,7 @@ interface IIsFetching {
     isFetching: boolean,
 }
 
-interface IComparisonEntityCategoryPaginateItem extends IComparisonEntityCategory, IIsFetching {}
+export interface IComparisonEntityCategoryPaginateItem extends IComparisonEntityCategory, IIsFetching {}
 
 export interface IComparisonEntityCategoryPaginate {
     items: IComparisonEntityCategoryPaginateItem[],
