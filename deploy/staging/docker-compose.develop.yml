@@ -48,4 +48,4 @@ services:
 networks:
   default:
     external:
-      name: whats_better_network1
+      name: bridge
