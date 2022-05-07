@@ -1,0 +1,1 @@
+export { default as ComparisonEntityCard } from './ComparisonEntityCard';
