@@ -15,7 +15,7 @@ services:
 
   core:
     build:
-      context: ../../services/core
+      context: ../../core
       dockerfile: Dockerfile
     restart: always
     environment:
@@ -36,7 +36,7 @@ services:
 
   web-client:
     build:
-      context: ../../services/web-client
+      context: ../../web-client
       dockerfile: Dockerfile
     restart: always
     environment:
