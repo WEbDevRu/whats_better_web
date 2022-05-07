@@ -31,7 +31,7 @@ export const useFieldResponseErrors = (
         ].includes(response.status)) {
             const responseErrors = response.errors as [] | [IResponseError];
             if (Array.isArray(responseErrors) && responseErrors) {
-                const fieldsErrors = responseErrors.reduce((totalFieldErrors:IFieldError[], currentError:IResponseError) => {
+                const fieldsErrors = ( responseErrors as IResponseError[]).reduce((totalFieldErrors:IFieldError[], currentError:IResponseError) => {
                     const foundExpectedErrors = expectedErrors?.filter((expectedError) =>
                         expectedError.errorCode === currentError.code
                     );
