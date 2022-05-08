@@ -45,7 +45,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=whats_better_network1
       - traefik.http.routers.web-client.rule=Host(`admin.nikrainev.ru`) && PathPrefix(`/`)
-      - traefik.http.routers.web-client.entrypoints=https
+      - traefik.http.routers.web-client.entrypoints=http
       - traefik.http.services.web-client.loadbalancer.server.port=3000
 
   traefik:
