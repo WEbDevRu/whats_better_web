@@ -57,7 +57,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - whats_better_network1
+      - traefik
 
 networks:
   default:
