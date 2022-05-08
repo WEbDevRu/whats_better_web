@@ -41,6 +41,12 @@ services:
     restart: always
     environment:
       - APP_ENV=develop
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=whats_better_network1
+      - traefik.http.routers.whoami.rule=Host(`admin.nikrainev.ru`)
+      - traefik.http.routers.whoami.entrypoints=https
+      - traefik.http.services.whoami.loadbalancer.server.port=3001
     ports:
       - "3000:3000"
 
