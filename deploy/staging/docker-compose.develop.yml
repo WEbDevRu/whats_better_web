@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      - POSTGRES_URL=postgres://my_user:password123@localhost:15432/my_database
+      - POSTGRES_URL=postgres://my_user:password123@auth-postgres:5432/my_database
       - JWT_SALT=df45rg
       - COOKIE_SALT=svl43vklg3
       - PORT=3001
@@ -44,3 +44,7 @@ services:
     ports:
       - "3000:3000"
 
+networks:
+  default:
+    external:
+      name: whats_better_network1

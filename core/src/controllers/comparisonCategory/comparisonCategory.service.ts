@@ -6,7 +6,6 @@ import {
 import {
     ComparisonCategoryRepository,
 } from '../../datasource/comparisonCategory/comparisonCategory.repository';
-import { UserRoles } from '../../common/const/USER_ROLES';
 import { ICreateCategoryRequest } from './requests/createCategory.request';
 import { ILoadCategoriesRequest } from './requests/loadCategories.request';
 import { IDeleteCategory } from './requests/deleteCategory.request';
