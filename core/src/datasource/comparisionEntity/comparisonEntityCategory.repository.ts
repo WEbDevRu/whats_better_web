@@ -11,7 +11,7 @@ export class ComparisonEntityCategoryRepository {
             description,
         }:{
             name: string,
-            description: string
+            description?: string
         }
     ) {
         return this.prismaService.comparisonEntityCategory.create({
