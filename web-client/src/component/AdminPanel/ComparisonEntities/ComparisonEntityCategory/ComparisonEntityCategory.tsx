@@ -104,7 +104,7 @@ const ComparisonEntityCategory: React.FC = () => {
                             type: 'from',
                             duration: 100,
                         }}
-                        onEnd={(e) => {
+                        onEnd={(e:any) => {
                             if (e.type === 'appear' || e.type === 'enter') {
                                 if (e.target && e.target.style) {
                                     e.target.style = 'display: inline-block';

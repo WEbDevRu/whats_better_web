@@ -1,0 +1,67 @@
+version: "3.6"
+
+services:
+  auth-postgres:
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=my_user
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=my_database
+    volumes:
+      - /postresql/data:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+
+  core:
+    build:
+      context: ../../core
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - POSTGRES_URL=postgres://my_user:password123@auth-postgres:5432/my_database
+      - JWT_SALT=df45rg
+      - COOKIE_SALT=svl43vklg3
+      - PORT=3001
+      - ADMIN_EMAIL=nikrainev@gmail.com
+      - ADMIN_PASSWORD=dsferg!34
+      - ADMIN_ACCESS_TOKEN_LIVE_TIME_IN_SECONDS=1800
+      - ADMIN_REFRESH_TOKEN_LIVE_TIME_IN_SECONDS=2592000
+    depends_on:
+      - auth-postgres
+    links:
+      - auth-postgres
+    ports:
+      - "3001:3001"
+
+  web-client:
+    build:
+      context: ../../web-client
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - APP_ENV=develop
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=whats_better_network1
+      - traefik.http.routers.web-client.rule=Host(`admin.nikrainev.ru`) && PathPrefix(`/`)
+      - traefik.http.routers.web-client.entrypoints=http
+      - traefik.http.services.web-client.loadbalancer.server.port=3000
+
+  traefik:
+    build:
+      context: ../../proxy/staging
+      dockerfile: Dockerfile
+    container_name: traefik
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  default:
+    external:
+      name: whats_better_network1

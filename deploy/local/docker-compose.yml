@@ -9,6 +9,6 @@ services:
       - POSTGRES_PASSWORD=password123
       - POSTGRES_DB=my_database
     volumes:
-      - /postresql/data:/var/lib/postgresql/data
+      - "C:/Users/nikra/Desktop/whats_better_web/core/postresql/data:/var/lib/postgresql/data"
     ports:
       - "15432:5432"
