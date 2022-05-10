@@ -52,4 +52,8 @@ export class ComparisonEntityCategoryService {
             limit,
         };
     }
+
+    async searchEntitiesCategories({ text }:{ text:string }) {
+        return this.comparisonEntityCategoryRepository.searchByTitleAndDescription({ text });
+    }
 }

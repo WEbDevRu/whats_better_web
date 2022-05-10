@@ -32,5 +32,8 @@
       "label": "Description",
       "placeholder": "Input description"
     }
+  },
+  "comparisonEntities": {
+    "entities": "Entities"
   }
 }

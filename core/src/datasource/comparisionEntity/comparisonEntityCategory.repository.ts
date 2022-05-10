@@ -11,7 +11,7 @@ export class ComparisonEntityCategoryRepository {
             description,
         }:{
             name: string,
-            description: string
+            description?: string
         }
     ) {
         return this.prismaService.comparisonEntityCategory.create({
@@ -80,5 +80,24 @@ export class ComparisonEntityCategoryRepository {
             },
             data: updateObject,
         });
+    }
+    
+    async searchByTitleAndDescription({
+        text,
+    }) {
+        const clearedText = text.replace(/\+/g, ' ');
+
+        const result = await this.prismaService.comparisonEntityCategory.findMany({
+            where: {
+                title: {
+                    search: clearedText,
+                },
+                description: {
+                    search: clearedText,
+                },
+            }, 
+        });
+
+        return result;
     }
 }

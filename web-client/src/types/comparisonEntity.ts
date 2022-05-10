@@ -40,3 +40,35 @@ export interface IAddComparisonEntityCategory {
     title: string,
     description?: string
 }
+
+export interface ILoadComparisonEntities {
+    limit: number,
+    page: number,
+}
+
+export enum ComparisonEntities {
+    Integrated_video = 'INTEGRATED_VIDEO',
+    Image = 'IMAGE',
+    Text = 'TEXT'
+}
+
+export type ComparisonEntity = `${ComparisonEntities}`;
+
+export interface IComparisonEntity {
+    id?: string,
+    title: string,
+    description?: string,
+    type: ComparisonEntities,
+    link: string,
+    createdAt?: string,
+    updatedAt?: string,
+}
+
+export interface IComparisonEntityPaginate {
+    items: IComparisonEntity[],
+    totalItems: number | undefined,
+    limit: number | undefined,
+    page: number | undefined,
+    isInit: boolean,
+    isFetching: boolean,
+}

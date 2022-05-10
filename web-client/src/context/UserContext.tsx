@@ -64,6 +64,15 @@ export const UserProvider = (props:PropsInterface) => {
         }
     }, [getMeRS.status]);
 
+    useEffect(() => {
+        if (loginMeRS.status ===  RequestStatuses.Succeeded) {
+            setAppState({
+                isInit: true,
+                userRole: UserRoles.Admin
+            });
+        }
+    }, [loginMeRS.status]);
+
     return (
         <UserContext.Provider
             value={{

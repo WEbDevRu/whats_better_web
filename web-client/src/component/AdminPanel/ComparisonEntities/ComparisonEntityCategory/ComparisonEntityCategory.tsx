@@ -40,7 +40,6 @@ const ComparisonEntityCategory: React.FC = () => {
     const { t:tc } = useTranslation(NS_COMMON);
 
     const [tagsState, setTagsState] = useState({
-        tags: ['Tag 1', 'Tag 2', 'Tag 3'],
         inputVisible: false,
         inputValue: '',
     });
@@ -68,11 +67,6 @@ const ComparisonEntityCategory: React.FC = () => {
     };
 
     const handleInputConfirm = (values:Record<string, string>) => {
-        const { inputValue } = tagsState;
-        let { tags } = tagsState;
-        if (inputValue && tags.indexOf(inputValue) === -1) {
-            tags = [...tags, inputValue];
-        }
 
         onAddEntityCategory({
             title: values.title,
@@ -82,7 +76,6 @@ const ComparisonEntityCategory: React.FC = () => {
         form.resetFields();
 
         setTagsState({
-            tags,
             inputVisible: false,
             inputValue: '',
         });
@@ -126,6 +119,7 @@ const ComparisonEntityCategory: React.FC = () => {
                                             e.preventDefault();
                                             onDeleteEntityCategory({ comparisonEntityCategoryId: category.id as string });
                                         }}
+                                        className={styles.tag}
                                     >
                                         {category.title}
                                         {category.isFetching && (
