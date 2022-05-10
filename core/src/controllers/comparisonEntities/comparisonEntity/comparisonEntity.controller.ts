@@ -43,6 +43,7 @@ export class ComparisonEntityController {
             type: req.body.type,
             description: req.body.description,
             link: req.body.link,
+            categories: req.body.categories,
         });
 
         return new ComparisonEntity(result);

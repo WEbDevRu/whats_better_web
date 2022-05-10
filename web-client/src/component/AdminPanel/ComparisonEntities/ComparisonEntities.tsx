@@ -5,6 +5,7 @@ import { ComparisonEntityCategory } from './ComparisonEntityCategory';
 import { ComparisonEntitiesList } from './ComparisonEntitiesList';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { NS_ADMIN_PANEL } from '../../../const/NAMESPACES';
+import { AddComparisonEntityModal } from './AddComparisonEntityModal';
 
 export const PAGINATION_PAGE_SIZE = 10;
 
@@ -20,6 +21,7 @@ const ComparisonEntities: React.FC = () => {
             >
                 {t('comparisonEntities.entities')}
             </Typography.Title>
+            <AddComparisonEntityModal />
             <ComparisonEntitiesList />
         </div>
     );

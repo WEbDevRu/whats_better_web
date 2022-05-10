@@ -11,11 +11,15 @@ export class ComparisonEntityRepository {
         description,
         type,
         link,
+        categories,
     }: {
         title: string,
         description?: string,
         type: ComparisonEntityType,
         link: string,
+        categories?: {
+            comparisonEntityCategoryId
+        }[]
     }) {
         return this.prismaService.comparisonEntity.create({
             data: {
@@ -23,6 +27,17 @@ export class ComparisonEntityRepository {
                 description,
                 type,
                 link,
+                ComparisonEntity_ComparisonEntityCategory: {
+                    create: categories.map((category) => (
+                        {
+                            comparisonEntityCategory: {
+                                connect: {
+                                    id: category.comparisonEntityCategoryId,
+                                },
+                            },
+                        }
+                    )),
+                },
             },
         });
     }

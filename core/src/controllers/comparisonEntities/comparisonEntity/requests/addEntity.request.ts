@@ -1,7 +1,10 @@
 import {
     IsNotEmpty,
-    IsEnum, IsString,
+    IsEnum,
+    IsString,
+    IsArray,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ComparisonEntityType } from '@prisma/client';
 
 export class AddEntityRequest {
@@ -13,6 +16,9 @@ export class AddEntityRequest {
 
     @IsString()
     link: string;
+
+    @IsArray()
+    categories: string;
 }
 
 export interface IAddEntity {
@@ -20,4 +26,5 @@ export interface IAddEntity {
     description?: string;
     type: ComparisonEntityType;
     link: string;
+    categories: string[];
 }

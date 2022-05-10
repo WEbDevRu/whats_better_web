@@ -14,6 +14,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
     catch(exception: Error, host: ArgumentsHost): unknown {
         const h = host.switchToHttp();
         const res = h.getResponse<FastifyReply>();
+        console.log(exception);
 
         if (exception instanceof HttpException) {
             let newException;

@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 model Admin {
@@ -63,7 +64,7 @@ model ComparisonEntityCategory {
 }
 
 enum ComparisonEntityType {
-  INTAGRATED_VIDEO
+  INTEGRATED_VIDEO
   IMAGE
   TEXT
 }
