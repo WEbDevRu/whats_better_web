@@ -100,4 +100,22 @@ export class ComparisonEntityCategoryRepository {
 
         return result;
     }
+
+    async getCategoryByComparisonEntity({
+        comparisonEntityId,
+    }: { comparisonEntityId: string }){
+        return this.prismaService.comparisonEntity.findMany({
+            where: {
+                categories: {
+                    some: {
+                        comparisonEntities: {
+                            every: {
+                                id: comparisonEntityId,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
 }

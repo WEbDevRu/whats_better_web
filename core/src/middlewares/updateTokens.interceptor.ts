@@ -11,7 +11,7 @@ export class UpdateTokensInterceptor implements NestInterceptor {
         const response = context.switchToHttp().getResponse();
         const request = context.switchToHttp().getRequest();
 
-        if (request.user.adminId && request.user.needUpdateTokens) {
+        if (request?.user?.adminId && request?.user?.needUpdateTokens) {
 
             response.cookie('refreshToken', request.user.newRefreshToken, {
                 expires: new Date(Date.now() + +VARS.adminRefreshTokenLiveTimeInSeconds * 1000),
