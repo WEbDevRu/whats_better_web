@@ -27,16 +27,10 @@ export class ComparisonEntityRepository {
                 description,
                 type,
                 link,
-                ComparisonEntity_ComparisonEntityCategory: {
-                    create: categories.map((category) => (
-                        {
-                            comparisonEntityCategory: {
-                                connect: {
-                                    id: category.comparisonEntityCategoryId,
-                                },
-                            },
-                        }
-                    )),
+                categories: {
+                    connect: categories.map((category) => ({
+                        id: category.comparisonEntityCategoryId
+                    })),
                 },
             },
         });
@@ -61,5 +55,15 @@ export class ComparisonEntityRepository {
             items: result[0],
             totalItems: result[1],
         };
+    }
+
+    async getComparisonEntityById({
+        id,
+    }: { id: string }) {
+        return this.prismaService.comparisonEntity.findFirst({
+            where: {
+                id,
+            },
+        });
     }
 }

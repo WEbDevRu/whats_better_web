@@ -41,6 +41,16 @@ export class ComparisonCategoryRepository {
         };
     }
 
+    async getCategoryById({
+        id,
+    }:{ id: string }) {
+        return this.prismaService.comparisonCategory.findFirst({
+            where: {
+                id,
+            },
+        });
+    }
+
     async deleteCategoryById({
         categoryId,
     }:{

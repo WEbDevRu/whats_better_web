@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ComparisonCategory {
+  createdAt: String!
+  description: String!
+  id: ID
+  title: String!
+  updatedAt: String!
+}
+
+type ComparisonEntity {
+  createdAt: String!
+  description: String!
+  entityCategories: [ComparisonEntityCategoryModel!]!
+  id: ID
+  link: String!
+  title: String!
+  type: String!
+  updatedAt: String!
+}
+
+type ComparisonEntityCategoryModel {
+  createdAt: String!
+  description: String!
+  id: ID
+  title: String!
+  updatedAt: String!
+}
+
+type Query {
+  getComparisonCategory(id: String!): ComparisonCategory!
+  getComparisonEntity(id: String!): ComparisonEntity!
+  queryComparisonCategory: [ComparisonCategory!]!
+  queryComparisonEntity: [ComparisonEntity!]!
+  queryComparisonEntityCategory: [ComparisonEntityCategoryModel!]!
+}
