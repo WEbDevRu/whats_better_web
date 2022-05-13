@@ -7,10 +7,15 @@ import {
     IEditComparisonEntityCategory,
     ILoadComparisonEntitiesCategories,
     IComparisonEntityCategoryPaginateItem,
+    IComparisonEntityPaginate,
+    ILoadComparisonEntities,
 } from '../types/comparisonEntity';
 
 import { useRequest } from '../hooks/useRequest';
-import { API_COMPARISON_ENTITIES } from '../const/http/API_URLS';
+import {
+    API_COMPARISON_ENTITIES_CATEGORIES,
+    API_COMPARISON_ENTITY,
+} from '../const/http/API_URLS';
 import { RequestMethods, RequestStatuses } from '../const/http';
 
 interface IContext {
@@ -19,6 +24,7 @@ interface IContext {
     onAddEntityCategory: (data:IAddComparisonEntityCategory) => void,
     onEditEntityCategory: (data:IEditComparisonEntityCategory) => void,
     onDeleteEntityCategory: (data:IDeleteComparisonEntityCategory) => void,
+    onLoadEntities: (data:ILoadComparisonEntities) => void,
 };
 
 const ComparisonEntityContext = createContext({} as IContext);
@@ -39,11 +45,20 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
         isFetching: false,
     });
 
+    const [entityPaginate, setEntityPaginate] = useState<IComparisonEntityPaginate>({
+        items: [],
+        totalItems: undefined,
+        limit: undefined,
+        page: undefined,
+        isInit: false,
+        isFetching: false,
+    });
+
     const {
         onRequest: onRequestEntitiesCategoriesList,
         state: entitiesCategoriesResponse,
     } = useRequest({
-        url: API_COMPARISON_ENTITIES,
+        url: API_COMPARISON_ENTITIES_CATEGORIES,
         method: RequestMethods.Get
     });
 
@@ -51,29 +66,33 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
         onRequest: onAddEntitiesCategory,
         state: addEntitiesCategoryResponse,
     } = useRequest({
-        url: API_COMPARISON_ENTITIES,
+        url: API_COMPARISON_ENTITIES_CATEGORIES,
         method: RequestMethods.Post
-    });
-
-    const {
-        onRequest: onEditEntitiesCategory,
-        state: editEntitiesCategoryResponse,
-    } = useRequest({
-        url: API_COMPARISON_ENTITIES,
-        method: RequestMethods.Put
     });
 
     const {
         onRequest: onDeleteEntitiesCategory,
         state: deleteEntitiesCategoryResponse,
     } = useRequest({
-        url: API_COMPARISON_ENTITIES,
+        url: API_COMPARISON_ENTITIES_CATEGORIES,
         method: RequestMethods.Delete
     });
 
-    useEffect(() => {
+    const {
+        onRequest: onAddEntityRequest,
+        state: addEntityResponse,
+    } = useRequest({
+        url: API_COMPARISON_ENTITY,
+        method: RequestMethods.Post
+    });
 
-    }, []);
+    const {
+        onRequest: onLoadEntitiesRequest,
+        state: loadEntitiesResponse,
+    } = useRequest({
+        url: API_COMPARISON_ENTITY,
+        method: RequestMethods.Get
+    });
 
     const onAddEntityCategory = (data:IAddComparisonEntityCategory) => {
         onAddEntitiesCategory({
@@ -118,6 +137,15 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
         }));
     };
 
+    const onLoadEntities = (data:ILoadComparisonEntities) => {
+        onLoadEntitiesRequest({
+            params: {
+                page: data.page,
+                limit: data.limit,
+            }
+        });
+    };
+
     useEffect(() => {
         if (entitiesCategoriesResponse.status === RequestStatuses.Succeeded) {
             console.log('here 1');
@@ -155,7 +183,7 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
             setEntityCategoriesPaginate((c) => {
                 const currentCopy = { ...c };
 
-                const newItem = { ...addEntitiesCategoryResponse.result, isFetching: false } as IComparisonEntityCategoryPaginateItem
+                const newItem = { ...addEntitiesCategoryResponse.result, isFetching: false } as IComparisonEntityCategoryPaginateItem;
                 currentCopy.items = [newItem, ...currentCopy.items];
 
                 return {
@@ -175,6 +203,7 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
                 onAddEntityCategory,
                 onEditEntityCategory,
                 onDeleteEntityCategory,
+                onLoadEntities,
             }}
         >
             {children}

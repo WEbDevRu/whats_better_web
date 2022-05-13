@@ -14,8 +14,7 @@ import { VARS } from './config/vars';
 async function bootstrap() {
     const app = await NestFactory.create<NestFastifyApplication>(
         AppModule,
-        new FastifyAdapter(),
-        { cors: true }
+        new FastifyAdapter()
     );
     const { httpAdapter } = app.get(HttpAdapterHost);
     app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
