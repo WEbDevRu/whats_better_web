@@ -8,10 +8,6 @@ import {
 } from '@nestjs/graphql';
 import { ComparisonEntityType } from '@prisma/client';
 
-registerEnumType(ComparisonEntityType, {
-    name: 'ComparisonEntityType',
-});
-
 @ObjectType()
 export class ComparisonEntity {
     @Field(type => ID, { nullable: true })
@@ -29,7 +25,7 @@ export class ComparisonEntity {
     @Field()
     description: string;
 
-    @Field()
+    @Field(type => ComparisonEntityType)
     type: ComparisonEntityType;
 
     @Field()

@@ -17,7 +17,7 @@ type ComparisonEntity {
   id: ID
   link: String!
   title: String!
-  type: String!
+  type: ComparisonEntityType!
   updatedAt: String!
 }
 
@@ -29,10 +29,16 @@ type ComparisonEntityCategoryModel {
   updatedAt: String!
 }
 
+enum ComparisonEntityType {
+  IMAGE
+  INTEGRATED_VIDEO
+  TEXT
+}
+
 type Query {
   getComparisonCategory(id: String!): ComparisonCategory!
   getComparisonEntity(id: String!): ComparisonEntity!
   queryComparisonCategory: [ComparisonCategory!]!
-  queryComparisonEntity: [ComparisonEntity!]!
+  queryComparisonEntity(limit: Float!, page: Float!): [ComparisonEntity!]!
   queryComparisonEntityCategory: [ComparisonEntityCategoryModel!]!
 }
