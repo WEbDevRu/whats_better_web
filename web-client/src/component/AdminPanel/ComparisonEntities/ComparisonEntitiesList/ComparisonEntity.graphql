@@ -1,0 +1,18 @@
+query QueryComparisonEntity($limit: Float!, $page: Float!) {
+    queryComparisonEntity(limit: $limit, page: $page) {
+        createdAt
+        description
+        id
+        link
+        type
+        title
+        updatedAt
+        entityCategories {
+            description
+            createdAt
+            id
+            title
+            updatedAt
+        }
+    }
+}

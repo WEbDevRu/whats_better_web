@@ -3,7 +3,7 @@ import {
     ResolveField,
     Args,
     Query,
-    Parent,
+    Parent, registerEnumType,
 } from '@nestjs/graphql';
 import { ComparisonEntity } from '../entities/comparisonEntity.model';
 import { ComparisonEntityCategoryModel } from '../entities/comparisonEntityCategory.model';
@@ -12,6 +12,11 @@ import { ComparisonEntityRepository } from '../../../datasource/comparisionEntit
 import {
     ComparisonEntityCategoryRepository,
 } from '../../../datasource/comparisionEntity/comparisonEntityCategory.repository';
+import { ComparisonEntityType } from '@prisma/client';
+
+registerEnumType(ComparisonEntityType, {
+    name: 'ComparisonEntityType',
+});
 
 @Resolver(of => ComparisonEntity)
 export class ComparisonEntityResolver {
@@ -29,11 +34,15 @@ export class ComparisonEntityResolver {
     }
 
     @Query(returns => [ComparisonEntity])
-    async queryComparisonEntity() {
+    async queryComparisonEntity(
+        @Args('page', ) page?: number,
+        @Args('limit', ) limit?: number
+    ) {
         const result = await this.comparisonEntityRepository.getComparisonEntitiesWithPaginate({
-            page: 1,
-            limit: 1000,
+            page: page || 1,
+            limit: limit || 1000,
         });
+
 
         return result.items;
     }
