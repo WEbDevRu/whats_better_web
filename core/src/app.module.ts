@@ -20,6 +20,8 @@ import { ComparisonEntityResolver } from './controllers/comparisonEntities/compa
 import { ComparisonEntityRepository } from './datasource/comparisionEntity/comparisonEntity.repository';
 import { ComparisonEntityCategoryResolver } from './controllers/comparisonEntities/categories/categories.resolver';
 import { ComparisonEntityCategoryRepository } from './datasource/comparisionEntity/comparisonEntityCategory.repository';
+import { ComparisonRepository } from './datasource/comparison/comparison.repository';
+import { ComparisonModule } from './controllers/comparison/comparison.module';
 
 @Global()
 @Module({
@@ -29,6 +31,7 @@ import { ComparisonEntityCategoryRepository } from './datasource/comparisionEnti
         AdminRepository,
         ComparisonCategoryModule,
         ComparisonEntitiesModule,
+        ComparisonModule,
         RouterModule.register([{
             path: '',
             module: AdminModule,
@@ -61,6 +64,7 @@ import { ComparisonEntityCategoryRepository } from './datasource/comparisionEnti
         ComparisonEntityRepository,
         ComparisonEntityCategoryResolver,
         ComparisonEntityCategoryRepository,
+        ComparisonRepository,
     ],
     exports: [
         PrismaPostgres,
@@ -73,6 +77,7 @@ import { ComparisonEntityCategoryRepository } from './datasource/comparisionEnti
         ComparisonEntityRepository,
         ComparisonEntityCategoryResolver,
         ComparisonEntityCategoryRepository,
+        ComparisonRepository,
     ],
 })
 export class AppModule {}

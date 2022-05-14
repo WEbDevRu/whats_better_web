@@ -131,7 +131,7 @@ const AddComparisonEntityModal: React.FC = () => {
                 onClick={createModal.onShow}
                 icon={<PlusOutlined />}
             >
-                {t('categories.addCategory')}
+                Add Entity
             </Button>
             <Modal
                 title="Add entity"

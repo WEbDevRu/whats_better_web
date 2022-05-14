@@ -2,7 +2,8 @@
   "pages": {
     "main": "Main",
     "categories": "Categories",
-    "comparisonEntities": "Comparison entities"
+    "comparisonEntities": "Comparison entities",
+    "comparisons": "Comparisons"
   },
   "actions": {
     "create": "Create",
