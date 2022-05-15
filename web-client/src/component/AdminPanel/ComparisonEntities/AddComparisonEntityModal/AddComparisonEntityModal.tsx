@@ -15,7 +15,6 @@ const { Option } = Select;
 
 
 const AddComparisonEntityModal: React.FC = () => {
-
     const createModal = useModal();
     const [form] = Form.useForm();
 
@@ -51,7 +50,6 @@ const AddComparisonEntityModal: React.FC = () => {
     };
 
     const handleFinish = async (values:Record<string, string>) => {
-        console.log(values);
         handleAddEntity({
             data: {
                 title: values.title,

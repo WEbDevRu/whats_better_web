@@ -15,19 +15,20 @@ export class ComparisonCategoryService {
     constructor(
         @Inject(forwardRef(() => ComparisonCategoryRepository))
         private readonly comparisonCategoryRepository: ComparisonCategoryRepository,
-    ) {}
+    ) {
+    }
 
-    async addCategory({ title, description }:ICreateCategoryRequest) {
+    async addCategory({ title, description }: ICreateCategoryRequest) {
         const categoryData = await this.comparisonCategoryRepository.addCategory({
             title: title,
-            description: description, 
+            description: description,
         });
 
         return categoryData;
     }
 
 
-    async loadCategoriesList({ page, limit }:ILoadCategoriesRequest) {
+    async loadCategoriesList({ page, limit }: ILoadCategoriesRequest) {
         const list = await this.comparisonCategoryRepository.getCategoriesWithPagination({
             page,
             limit,
@@ -40,11 +41,15 @@ export class ComparisonCategoryService {
         };
     }
 
-    async deleteCategory({ id }:IDeleteCategory) {
+    async deleteCategory({ id }: IDeleteCategory) {
         const result = await this.comparisonCategoryRepository.deleteCategoryById({
             categoryId: id,
         });
 
         return result;
+    }
+
+    async searchEntitiesCategories({ text }: { text: string }) {
+        return this.comparisonCategoryRepository.searchByTitleAndDescription({ text });
     }
 }
