@@ -39,8 +39,6 @@ services:
       - auth-postgres
     links:
       - auth-postgres
-    ports:
-      - "3001:3001"
 
   web-client:
     build:
