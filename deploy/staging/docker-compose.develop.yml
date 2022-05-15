@@ -27,6 +27,14 @@ services:
       - ADMIN_PASSWORD=dsferg!34
       - ADMIN_ACCESS_TOKEN_LIVE_TIME_IN_SECONDS=1800
       - ADMIN_REFRESH_TOKEN_LIVE_TIME_IN_SECONDS=2592000
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=whats_better_network1
+      - traefik.http.routers.core.rule=Host(`admin.nikrainev.ru`) && (PathPrefix(`/api/v1`) || PathPrefix(`/graphql`))
+      - traefik.http.routers.core.entrypoints=http
+      - traefik.http.services.core.loadbalancer.server.port=3001
+      - traefik.http.middlewares.test-replacepathregex.replacepathregex.regex=^/api/v1/(.*)"
+      - traefik.http.middlewares.test-replacepathregex.replacepathregex.replacement=/$$1"
     depends_on:
       - auth-postgres
     links:
@@ -40,7 +48,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      - APP_ENV=develop
+      - APP_ENV=production
     labels:
       - traefik.enable=true
       - traefik.docker.network=whats_better_network1
