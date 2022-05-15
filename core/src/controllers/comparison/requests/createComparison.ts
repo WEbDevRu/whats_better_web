@@ -8,12 +8,12 @@ export class CreateComparisonRequest {
     categoryId: string;
 
     @IsArray()
-    comparisonsId: string[];
+    entitiesId: string[];
 }
 
 export interface ICreateComparisonRequest {
     title: string,
     description?: string,
-    comparisonsId: string[],
+    entitiesId: string[],
     categoryId: string,
 }

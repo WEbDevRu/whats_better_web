@@ -39,7 +39,7 @@ export class ComparisonController {
             title: req.body.title,
             description: req.body?.title,
             categoryId: req.body.categoryId,
-            comparisonsId: req.body.comparisonsId,
+            entitiesId: req.body.entitiesId,
         });
 
         return result;

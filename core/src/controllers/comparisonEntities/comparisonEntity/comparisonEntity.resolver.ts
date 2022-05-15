@@ -50,7 +50,6 @@ export class ComparisonEntityResolver {
     @ResolveField('entityCategories', returns => [ComparisonEntityCategoryModel])
     async categories(@Parent() comparisonEntity:ComparisonEntity) {
         const { id } = comparisonEntity;
-        console.log(id);
 
         const result = await this.comparisonEntityCategoryRepository.getCategoryByComparisonEntity({
             comparisonEntityId: id,

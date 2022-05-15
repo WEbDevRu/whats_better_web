@@ -68,4 +68,17 @@ export class ComparisonEntityController {
             items: result.items?.map((item) => new ComparisonEntity(item)),
         };
     }
+
+    @Roles(UserRoles.Admin)
+    @UseGuards(JwtAuthGuard)
+    @Get('/search')
+    async searchEntitiesCategories (
+        @Req() req,
+    ):Promise<any> {
+        const result = await this.comparisonEntityService.searchEntities({ text: req.query.text });
+
+        return {
+            ...result,
+        };
+    }
 }

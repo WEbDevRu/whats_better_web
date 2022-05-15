@@ -17,4 +17,6 @@ export const API_COMPARISON_ENTITIES_CATEGORY_SEARCH = `${API_ROOT}/comparison-e
 export const API_COMPARISON_ENTITY = ({ id }: { id?: string })  =>
     `${API_ROOT}/comparison-entity${id ? `/${id}` : ''}`;
 
+export const API_COMPARISON_ENTITY_SEARCH = `${API_ROOT}/comparison-entity/search`;
+
 export const API_ADD_COMPARISON = `${API_ROOT}/comparison`;

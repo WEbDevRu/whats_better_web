@@ -15,8 +15,17 @@ export class ComparisonService {
         private readonly comparisonRepository: ComparisonRepository,
     ) {}
 
-    async addComparison({ title, description }:ICreateComparisonRequest) {
-
-        return '';
+    async addComparison({
+        title,
+        description,
+        categoryId,
+        entitiesId,
+    }:ICreateComparisonRequest) {
+        return this.comparisonRepository.addComparison({
+            title,
+            description,
+            comparisonEntitiesId: entitiesId,
+            categoryId,
+        });
     }
 }

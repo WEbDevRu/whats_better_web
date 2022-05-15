@@ -7,7 +7,8 @@ import { NS_ADMIN_PANEL, NS_COMMON } from '../../../../const/NAMESPACES';
 import { useRequest } from '../../../../hooks/useRequest';
 import {
     API_ADD_COMPARISON,
-    API_CATEGORIES_LIST, API_CATEGORY_SEARCH,
+    API_CATEGORIES_LIST,
+    API_COMPARISON_ENTITY_SEARCH,
 } from '../../../../const/http/API_URLS';
 import { RequestMethods, RequestStatuses } from '../../../../const/http';
 import { ComparisonEntities } from '../../../../types/comparisonEntity';
@@ -45,7 +46,7 @@ const AddComparison: React.FC<IProps> = ({
         onRequest: handleSearchEntityCategory,
         state: searchResponse,
     } = useRequest({
-        url: API_CATEGORY_SEARCH,
+        url: API_COMPARISON_ENTITY_SEARCH,
         method: RequestMethods.Get,
     });
 
@@ -91,7 +92,7 @@ const AddComparison: React.FC<IProps> = ({
                 description: values.description,
                 categoryId: values.category,
                 type: Object.values(ComparisonEntities)[Object.keys(ComparisonEntities).indexOf(values.type as any)],
-                comparisonsId: categoriesOptions.selectedOptions.map((option) => option.id)
+                entitiesId: categoriesOptions.selectedOptions.map((option) => option.id)
             }
         });
         createModal.onStartConfirmationLoading();

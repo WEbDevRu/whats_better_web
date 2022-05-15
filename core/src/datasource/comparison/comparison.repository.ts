@@ -8,13 +8,26 @@ export class ComparisonRepository {
     async addComparison({
         title,
         description,
+        categoryId,
+        comparisonEntitiesId,
     }: {
         title: string,
         description?: string,
-        comparisonEntities?: {
-            comparisonEntitiesId
-        }[]
+        categoryId: string,
+        comparisonEntitiesId: string[]
     }) {
-
+        console.log(comparisonEntitiesId);
+        return this.prismaService.comparision.create({
+            data: {
+                title,
+                description,
+                categoryId,
+                comparisonEntities: {
+                    connect: comparisonEntitiesId.map((id) => ({
+                        id: id,
+                    })),
+                },
+            },
+        });
     }
 }
