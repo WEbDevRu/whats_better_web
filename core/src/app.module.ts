@@ -18,6 +18,7 @@ import { ComparisonCategoryResolver } from './controllers/comparisonCategory/com
 import { ComparisonCategoryRepository } from './datasource/comparisonCategory/comparisonCategory.repository';
 import { ComparisonEntityResolver } from './controllers/comparisonEntities/comparisonEntity/comparisonEntity.resolver';
 import { ComparisonEntityRepository } from './datasource/comparisionEntity/comparisonEntity.repository';
+import { ComparisonResolver } from './controllers/comparison/comparison.resolver';
 import { ComparisonEntityCategoryResolver } from './controllers/comparisonEntities/categories/categories.resolver';
 import { ComparisonEntityCategoryRepository } from './datasource/comparisionEntity/comparisonEntityCategory.repository';
 import { ComparisonRepository } from './datasource/comparison/comparison.repository';
@@ -64,6 +65,7 @@ import { ComparisonModule } from './controllers/comparison/comparison.module';
         ComparisonEntityRepository,
         ComparisonEntityCategoryResolver,
         ComparisonEntityCategoryRepository,
+        ComparisonResolver,
         ComparisonRepository,
     ],
     exports: [
@@ -76,6 +78,7 @@ import { ComparisonModule } from './controllers/comparison/comparison.module';
         ComparisonCategoryRepository,
         ComparisonEntityRepository,
         ComparisonEntityCategoryResolver,
+        ComparisonResolver,
         ComparisonEntityCategoryRepository,
         ComparisonRepository,
     ],

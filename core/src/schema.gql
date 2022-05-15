@@ -35,9 +35,21 @@ enum ComparisonEntityType {
   TEXT
 }
 
+type ComparisonModel {
+  category: ComparisonCategory!
+  createdAt: String!
+  description: String!
+  entityCategories: [ComparisonEntity!]!
+  id: ID
+  title: String!
+  updatedAt: String!
+}
+
 type Query {
+  getComparison(id: String!): ComparisonModel!
   getComparisonCategory(id: String!): ComparisonCategory!
   getComparisonEntity(id: String!): ComparisonEntity!
+  queryComparison(limit: Float!, page: Float!): [ComparisonModel!]!
   queryComparisonCategory: [ComparisonCategory!]!
   queryComparisonEntity(limit: Float!, page: Float!): [ComparisonEntity!]!
   queryComparisonEntityCategory: [ComparisonEntityCategoryModel!]!

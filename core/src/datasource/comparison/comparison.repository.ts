@@ -30,4 +30,66 @@ export class ComparisonRepository {
             },
         });
     }
+
+    async getComparisonWithPagination({
+        page,
+        limit,
+    }:{
+        page: number,
+        limit: number,
+    }) {
+        const result = await this.prismaService.$transaction([
+            this.prismaService.comparision.findMany({
+                skip: (page - 1)*limit,
+                take: limit,
+            }),
+            this.prismaService.comparision.count(),
+        ]);
+
+        return {
+            items: result[0],
+            totalItems: result[1],
+        };
+    }
+
+    async getComparisonById({
+        id,
+    }: { id: string }) {
+        return this.prismaService.comparision.findFirst({
+            where: {
+                id,
+            },
+        });
+    }
+
+    async getComparisonCategory({
+        id,
+    }: { id: string }) {
+        return this.prismaService.comparision.findFirst({
+            where: {
+                id,
+            },
+            include: {
+                category: true,
+            },
+        });
+    }
+
+    async getComparisonEntitiesByComparison({
+        comparisonId,
+    }: { comparisonId: string }){
+        return this.prismaService.comparision.findMany({
+            where: {
+                comparisonEntities: {
+                    some: {
+                        comparisions: {
+                            every: {
+                                id: comparisonId,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
 }
