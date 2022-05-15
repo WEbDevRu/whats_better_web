@@ -8,7 +8,6 @@ api:
 providers:
   docker:
     network: whats_better_network1
-    exposedbydefault: false
 
 entrypoints:
   http:

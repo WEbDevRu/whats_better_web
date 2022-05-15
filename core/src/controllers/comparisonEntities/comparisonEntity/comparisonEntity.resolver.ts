@@ -12,9 +12,9 @@ import { ComparisonEntityRepository } from '../../../datasource/comparisionEntit
 import {
     ComparisonEntityCategoryRepository,
 } from '../../../datasource/comparisionEntity/comparisonEntityCategory.repository';
-import { ComparisonEntityType } from '../../../common/const/types/ComparisonEntity';
+import { ComparisonEntityTypes } from '../../../common/const/types/ComparisonEntity';
 
-registerEnumType(ComparisonEntityType, {
+registerEnumType(ComparisonEntityTypes, {
     name: 'ComparisonEntityType',
 });
 
