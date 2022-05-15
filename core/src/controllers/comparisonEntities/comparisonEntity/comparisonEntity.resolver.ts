@@ -12,7 +12,7 @@ import { ComparisonEntityRepository } from '../../../datasource/comparisionEntit
 import {
     ComparisonEntityCategoryRepository,
 } from '../../../datasource/comparisionEntity/comparisonEntityCategory.repository';
-import { ComparisonEntityType } from '@prisma/client';
+import { ComparisonEntityType } from '../../../common/const/types/ComparisonEntity';
 
 registerEnumType(ComparisonEntityType, {
     name: 'ComparisonEntityType',
