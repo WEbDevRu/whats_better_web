@@ -7,7 +7,7 @@ import {
 import { ComparisonEntityType } from '@prisma/client';
 
 @ObjectType()
-export class ComparisonEntityCategoryModel {
+export class ComparisonEntityCategory {
     @Field(type => ID, { nullable: true })
     id: string;
 

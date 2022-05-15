@@ -78,17 +78,13 @@ export class ComparisonRepository {
     async getComparisonEntitiesByComparison({
         comparisonId,
     }: { comparisonId: string }){
-        return this.prismaService.comparision.findMany({
+        console.log(comparisonId);
+        return this.prismaService.comparision.findFirst({
             where: {
-                comparisonEntities: {
-                    some: {
-                        comparisions: {
-                            every: {
-                                id: comparisonId,
-                            },
-                        },
-                    },
-                },
+                id: comparisonId,
+            },
+            include: {
+                comparisonEntities: true,
             },
         });
     }

@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, Typography } from 'antd';
+import { Comparison } from '../../../graphql/types/graphql';
 const { Content } = Layout;
 import styles from './Comparisons.module.less';
 import { AddComparison } from '../../component/AdminPanel/Comparisons/AddComparison';
 import { ComparisonsList } from '../../component/AdminPanel/Comparisons/ComparisonsList';
+import { useQueryComparisonLazyQuery } from './types/Comparisons';
 
 
 const ComparisonsContainer: React.FC = ({}) => {
+
+    const [queryComparisons, { data, refetch }] = useQueryComparisonLazyQuery();
+
+    useEffect(() => {
+        queryComparisons({
+            variables: {
+                page: 1,
+                limit: 100,
+            }
+        });
+    }, [queryComparisons]);
 
     return (
 
@@ -18,8 +31,12 @@ const ComparisonsContainer: React.FC = ({}) => {
                     >
                         Comparisons
                     </Typography.Title>
-                    <AddComparison />
-                    <ComparisonsList />
+                    <AddComparison
+                        refetchList={refetch}
+                    />
+                    <ComparisonsList
+                        comparisons={data?.queryComparison as Partial<Comparison>[]}
+                    />
                 </div>
             </Content>
         </Layout>

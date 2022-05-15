@@ -13,8 +13,11 @@ import { RequestMethods, RequestStatuses } from '../../../../const/http';
 
 const { Option } = Select;
 
+interface IProps {
+    refetchList: () => void,
+}
 
-const AddComparisonEntityModal: React.FC = () => {
+const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
     const createModal = useModal();
     const [form] = Form.useForm();
 
@@ -119,6 +122,7 @@ const AddComparisonEntityModal: React.FC = () => {
             createModal.onClose();
             createModal.onStopConfirmationLoading();
             form.resetFields();
+            refetchList();
         }
     }, [addEntityResponse.status]);
 

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/graphql';
 
 @ObjectType()
-export class ComparisonModel {
+export class Comparison {
     @Field(type => ID, { nullable: true })
     id: string;
 

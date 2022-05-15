@@ -15,15 +15,16 @@ import { ComparisonEntities } from '../../../../types/comparisonEntity';
 import { PlusOutlined } from '@ant-design/icons';
 import TweenOneGroup from 'rc-tween-one/lib/TweenOneGroup';
 import { Category } from '../../../../types/categories';
+import { isExponentTwo } from '../../../../utils/number/isExponentTwo';
 
 const { Option } = Select;
 
 interface IProps {
-
+    refetchList: () => void,
 }
 
 const AddComparison: React.FC<IProps> = ({
-
+    refetchList,
 }) => {
     const createModal = useModal();
     const [form] = Form.useForm();
@@ -82,6 +83,11 @@ const AddComparison: React.FC<IProps> = ({
     }, [loadCategoriesListRS.status]);
 
     const handleSubmit = async () => {
+        if (!isExponentTwo(categoriesOptions.selectedOptions.length))
+            form.setFields([{
+                name: 'entities',
+                errors: ['Count should be exponent two']
+            }]);
         form.submit();
     };
 
@@ -155,6 +161,7 @@ const AddComparison: React.FC<IProps> = ({
             createModal.onClose();
             createModal.onStopConfirmationLoading();
             form.resetFields();
+            refetchList();
         }
     }, [addComparisonResponse.status]);
 
@@ -259,7 +266,8 @@ const AddComparison: React.FC<IProps> = ({
                         ))}
                     </TweenOneGroup>
                     <Form.Item
-                        label='Categories'
+                        label='Entities'
+                        name='entities'
                     >
                         <AutoComplete
                             allowClear
@@ -272,7 +280,7 @@ const AddComparison: React.FC<IProps> = ({
                             }))}
                             onSearch={onSearch}
                             onSelect={handleSelect}
-                            placeholder='Select tags'
+                            placeholder='Select entities'
                             options={categoriesOptions.searchOptions.map((option) => ({
                                 value: option.id,
                                 label: option.title,

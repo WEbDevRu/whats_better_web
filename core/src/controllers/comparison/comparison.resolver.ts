@@ -7,24 +7,24 @@ import {
 import { forwardRef, Inject } from '@nestjs/common';
 import { ComparisonRepository } from '../../datasource/comparison/comparison.repository';
 import { ComparisonCategory } from '../comparisonCategory/entities/comparisonCategory.model';
-import { ComparisonModel } from './entities/comparison.model';
-import { ComparisonEntityCategoryModel } from '../comparisonEntities/entities/comparisonEntityCategory.model';
+import { Comparison } from './entities/comparison.model';
+import { ComparisonEntityCategory } from '../comparisonEntities/entities/comparisonEntityCategory.model';
 import { ComparisonEntity } from '../comparisonEntities/entities/comparisonEntity.model';
 
-@Resolver(of => ComparisonModel)
+@Resolver(of => Comparison)
 export class ComparisonResolver {
     constructor(
         @Inject(forwardRef(() => ComparisonRepository))
         private readonly comparisonRepository: ComparisonRepository,
     ) {}
 
-    @Query(returns => ComparisonModel)
+    @Query(returns => Comparison)
     async getComparison(@Args('id', ) id: string) {
         const result = await this.comparisonRepository.getComparisonById({ id });
         return result;
     }
 
-    @Query(returns => [ComparisonModel])
+    @Query(returns => [Comparison])
     async queryComparison(
         @Args('page', ) page?: number,
         @Args('limit', ) limit?: number
@@ -38,17 +38,17 @@ export class ComparisonResolver {
     }
 
     @ResolveField('category', returns => ComparisonCategory)
-    async categories(@Parent() comparison:ComparisonModel) {
+    async categories(@Parent() comparison:Comparison) {
         const { id } = comparison;
 
         const result = await this.comparisonRepository.getComparisonCategory({
             id: id,
         });
 
-        return result;
+        return result.category;
     }
 
-    @ResolveField('entityCategories', returns => [ComparisonEntity])
+    @ResolveField('comparisonEntities', returns => [ComparisonEntity])
     async comparisonEntities(@Parent() comparisonEntity:ComparisonEntity) {
         const { id } = comparisonEntity;
 
@@ -56,6 +56,6 @@ export class ComparisonResolver {
             comparisonId: id,
         });
 
-        return result;
+        return result.comparisonEntities;
     }
 }

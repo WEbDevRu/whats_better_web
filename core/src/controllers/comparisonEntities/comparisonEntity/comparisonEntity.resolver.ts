@@ -6,7 +6,7 @@ import {
     Parent, registerEnumType,
 } from '@nestjs/graphql';
 import { ComparisonEntity } from '../entities/comparisonEntity.model';
-import { ComparisonEntityCategoryModel } from '../entities/comparisonEntityCategory.model';
+import { ComparisonEntityCategory } from '../entities/comparisonEntityCategory.model';
 import { forwardRef, Inject } from '@nestjs/common';
 import { ComparisonEntityRepository } from '../../../datasource/comparisionEntity/comparisonEntity.repository';
 import {
@@ -43,11 +43,10 @@ export class ComparisonEntityResolver {
             limit: limit || 1000,
         });
 
-
         return result.items;
     }
 
-    @ResolveField('entityCategories', returns => [ComparisonEntityCategoryModel])
+    @ResolveField('entityCategories', returns => [ComparisonEntityCategory])
     async categories(@Parent() comparisonEntity:ComparisonEntity) {
         const { id } = comparisonEntity;
 
@@ -55,6 +54,6 @@ export class ComparisonEntityResolver {
             comparisonEntityId: id,
         });
 
-        return result;
+        return result.categories;
     }
 }
