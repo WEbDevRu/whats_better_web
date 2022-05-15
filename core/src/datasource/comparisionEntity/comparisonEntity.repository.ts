@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaPostgres } from '../../providers/database/prismaPostres';
-import { ComparisonEntityType } from '@prisma/client';
+import { ComparisonEntityType } from '../../common/const/types/ComparisonEntity';
 
 @Injectable()
 export class ComparisonEntityRepository {

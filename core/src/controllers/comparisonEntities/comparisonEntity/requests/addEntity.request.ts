@@ -4,8 +4,7 @@ import {
     IsString,
     IsArray,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { ComparisonEntityType } from '@prisma/client';
+import { ComparisonEntityType } from '../../../../common/const/types/ComparisonEntity';
 
 export class AddEntityRequest {
     @IsNotEmpty()

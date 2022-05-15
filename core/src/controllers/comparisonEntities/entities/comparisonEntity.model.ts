@@ -6,7 +6,7 @@ import {
     ObjectType,
     registerEnumType,
 } from '@nestjs/graphql';
-import { ComparisonEntityType } from '@prisma/client';
+import { ComparisonEntityType } from '../../../common/const/types/ComparisonEntity';
 
 @ObjectType()
 export class ComparisonEntity {

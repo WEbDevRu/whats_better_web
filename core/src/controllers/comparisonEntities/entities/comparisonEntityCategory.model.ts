@@ -4,7 +4,6 @@ import {
     ID,
     ObjectType,
 } from '@nestjs/graphql';
-import { ComparisonEntityType } from '@prisma/client';
 
 @ObjectType()
 export class ComparisonEntityCategory {

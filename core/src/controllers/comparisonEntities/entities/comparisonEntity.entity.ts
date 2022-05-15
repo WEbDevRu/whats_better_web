@@ -1,4 +1,4 @@
-import { ComparisonEntityType } from '@prisma/client';
+import { ComparisonEntityType } from '../../../common/const/types/ComparisonEntity';
 
 export class ComparisonEntity {
     id: string;
