@@ -47,4 +47,8 @@ export class ComparisonEntityService {
             limit,
         };
     }
+
+    async searchEntities({ text }:{ text:string }) {
+        return this.comparisonEntityRepository.searchByTitleAndDescription({ text });
+    }
 }

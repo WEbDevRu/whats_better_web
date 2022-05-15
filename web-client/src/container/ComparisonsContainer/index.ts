@@ -1,0 +1,1 @@
+export { default as ComparisonsContainer } from './ComparisonsContainer';

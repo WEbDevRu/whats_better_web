@@ -108,8 +108,6 @@ export class ComparisonEntityCategoryController {
     ):Promise<any> {
         const result = await this.comparisonEntityCategoryService.searchEntitiesCategories({ text: req.query.text });
 
-        console.log(result);
-
         return {
             ...result,
         };
