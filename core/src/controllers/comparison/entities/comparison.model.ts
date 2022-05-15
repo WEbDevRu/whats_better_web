@@ -1,13 +1,11 @@
 import {
     Field,
-    Int,
     ID,
     ObjectType,
 } from '@nestjs/graphql';
-import { ComparisonEntityType } from '@prisma/client';
 
 @ObjectType()
-export class ComparisonEntityCategory {
+export class Comparison {
     @Field(type => ID, { nullable: true })
     id: string;
 

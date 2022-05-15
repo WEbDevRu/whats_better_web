@@ -62,4 +62,21 @@ export class ComparisonCategoryRepository {
             }, 
         });
     }
+
+    async searchByTitleAndDescription({
+        text,
+    }) {
+        const clearedText = text.replace(/\+/g, ' ');
+
+        return this.prismaService.comparisonCategory.findMany({
+            where: {
+                title: {
+                    search: clearedText,
+                },
+                description: {
+                    search: clearedText,
+                },
+            },
+        });
+    }
 }

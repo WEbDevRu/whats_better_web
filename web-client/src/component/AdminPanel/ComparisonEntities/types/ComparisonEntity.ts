@@ -1,4 +1,4 @@
-import * as Types from '../../../../../../graphql/types/graphql';
+import * as Types from '../../../../../graphql/types/graphql';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -9,7 +9,7 @@ export type QueryComparisonEntityQueryVariables = Types.Exact<{
 }>;
 
 
-export type QueryComparisonEntityQuery = { __typename?: 'Query', queryComparisonEntity: Array<{ __typename?: 'ComparisonEntity', createdAt: string, description: string, id?: string | null | undefined, link: string, type: Types.ComparisonEntityType, title: string, updatedAt: string, entityCategories: Array<{ __typename?: 'ComparisonEntityCategoryModel', description: string, createdAt: string, id?: string | null | undefined, title: string, updatedAt: string }> }> };
+export type QueryComparisonEntityQuery = { __typename?: 'Query', queryComparisonEntity: Array<{ __typename?: 'ComparisonEntity', createdAt: string, description: string, id?: string | null | undefined, link: string, type: Types.ComparisonEntityType, title: string, updatedAt: string, entityCategories: Array<{ __typename?: 'ComparisonEntityCategory', description: string, createdAt: string, id?: string | null | undefined, title: string, updatedAt: string }> }> };
 
 
 export const QueryComparisonEntityDocument = gql`

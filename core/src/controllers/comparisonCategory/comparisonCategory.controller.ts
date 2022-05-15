@@ -80,4 +80,17 @@ export class ComparisonCategoryController {
         });
         return  result;
     }
+
+    @Roles(UserRoles.Admin)
+    @UseGuards(JwtAuthGuard)
+    @Get('/search')
+    async searchEntitiesCategories (
+        @Req() req,
+    ):Promise<any> {
+        const result = await this.comparisonCategoryService.searchEntitiesCategories({ text: req.query.text });
+
+        return {
+            ...result,
+        };
+    }
 }

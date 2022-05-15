@@ -12,6 +12,17 @@ export type Scalars = {
   Float: number;
 };
 
+export type Comparison = {
+  __typename?: 'Comparison';
+  category: ComparisonCategory;
+  comparisonEntities: Array<ComparisonEntity>;
+  createdAt: Scalars['String'];
+  description: Scalars['String'];
+  id?: Maybe<Scalars['ID']>;
+  title: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type ComparisonCategory = {
   __typename?: 'ComparisonCategory';
   createdAt: Scalars['String'];
@@ -25,7 +36,7 @@ export type ComparisonEntity = {
   __typename?: 'ComparisonEntity';
   createdAt: Scalars['String'];
   description: Scalars['String'];
-  entityCategories: Array<ComparisonEntityCategoryModel>;
+  entityCategories: Array<ComparisonEntityCategory>;
   id?: Maybe<Scalars['ID']>;
   link: Scalars['String'];
   title: Scalars['String'];
@@ -33,8 +44,8 @@ export type ComparisonEntity = {
   updatedAt: Scalars['String'];
 };
 
-export type ComparisonEntityCategoryModel = {
-  __typename?: 'ComparisonEntityCategoryModel';
+export type ComparisonEntityCategory = {
+  __typename?: 'ComparisonEntityCategory';
   createdAt: Scalars['String'];
   description: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
@@ -50,11 +61,18 @@ export enum ComparisonEntityType {
 
 export type Query = {
   __typename?: 'Query';
+  getComparison: Comparison;
   getComparisonCategory: ComparisonCategory;
   getComparisonEntity: ComparisonEntity;
+  queryComparison: Array<Comparison>;
   queryComparisonCategory: Array<ComparisonCategory>;
   queryComparisonEntity: Array<ComparisonEntity>;
-  queryComparisonEntityCategory: Array<ComparisonEntityCategoryModel>;
+  queryComparisonEntityCategory: Array<ComparisonEntityCategory>;
+};
+
+
+export type QueryGetComparisonArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -65,6 +83,12 @@ export type QueryGetComparisonCategoryArgs = {
 
 export type QueryGetComparisonEntityArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryQueryComparisonArgs = {
+  limit: Scalars['Float'];
+  page: Scalars['Float'];
 };
 
 

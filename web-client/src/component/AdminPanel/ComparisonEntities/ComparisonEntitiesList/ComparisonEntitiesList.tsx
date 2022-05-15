@@ -1,25 +1,17 @@
 import React, { useEffect } from 'react';
+import { ComparisonEntity } from '../../../../../graphql/types/graphql';
 import styles from './ComparisonEntitiesList.module.less';
 import { ComparisonEntityCard } from './ComparisonEntityCard';
-import { useQueryComparisonEntityLazyQuery } from './types/ComparisonEntity';
 
+interface IProps {
+    entities: ComparisonEntity[]
+}
 
-const ComparisonEntitiesList: React.FC = () => {
-    const [queryEntities, { data }] = useQueryComparisonEntityLazyQuery();
-    
-    useEffect(() => {
-        queryEntities({
-            variables: {
-                page: 1,
-                limit: 100,
-            }
-        });
-    }, [queryEntities]);
-
+const ComparisonEntitiesList: React.FC<IProps> = ({ entities }) => {
 
     return (
         <div className={styles.cont}>
-            {data?.queryComparisonEntity?.map((entity) => (
+            {entities?.map((entity) => (
                 <ComparisonEntityCard
                     key={entity.id}
                     entity={entity}

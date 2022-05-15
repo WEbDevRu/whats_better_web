@@ -7,6 +7,7 @@ import {
     PieChartOutlined,
     SettingOutlined,
     AppstoreAddOutlined,
+    ApartmentOutlined,
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
@@ -18,6 +19,7 @@ import { useTranslation } from '../../../hooks/useTranslation';
 import {
     CATEGORIES,
     COMPARISON_ENTITIES,
+    COMPARISONS,
 } from '../../../const/http/WEB_CLIENT_PATHS';
 
 interface IProps {
@@ -43,6 +45,9 @@ const Sidebar: React.FC<IProps> = ({
         }
         if (router.pathname === COMPARISON_ENTITIES) {
             setSelectedItemKey('3');
+        }
+        if (router.pathname === COMPARISONS) {
+            setSelectedItemKey('4');
         }
     }, [router.pathname]);
 
@@ -86,6 +91,13 @@ const Sidebar: React.FC<IProps> = ({
                     <Link href={COMPARISON_ENTITIES}>
                         <a href={COMPARISON_ENTITIES}>
                             {t('pages.comparisonEntities')}
+                        </a>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key='4' icon={<ApartmentOutlined />}>
+                    <Link href={COMPARISONS}>
+                        <a href={COMPARISONS}>
+                            {t('pages.comparisons')}
                         </a>
                     </Link>
                 </Menu.Item>

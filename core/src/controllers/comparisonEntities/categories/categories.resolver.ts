@@ -4,7 +4,7 @@ import {
     Args,
     Query,
 } from '@nestjs/graphql';
-import { ComparisonEntityCategoryModel } from '../entities/comparisonEntityCategory.model';
+import { ComparisonEntityCategory } from '../entities/comparisonEntityCategory.model';
 import { forwardRef, Inject } from '@nestjs/common';
 import {
     ComparisonEntityCategoryRepository,
@@ -18,7 +18,7 @@ export class ComparisonEntityCategoryResolver {
         private readonly comparisonEntityCategoryRepository: ComparisonEntityCategoryRepository,
     ) {}
 
-    @Query(returns => [ComparisonEntityCategoryModel])
+    @Query(returns => [ComparisonEntityCategory])
     async queryComparisonEntityCategory() {
         const result = await this.comparisonEntityCategoryRepository.getComparisonEntityCategoriesWithPagination({
             page: 1,

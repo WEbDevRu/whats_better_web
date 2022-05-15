@@ -4,7 +4,7 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -26,31 +26,44 @@ model AdminSessions {
 }
 
 model ComparisonCategory {
-  id          String   @id @default(uuid()) @db.Uuid
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @db.VarChar(128)
-  description String   @default("")
+  id          String        @id @default(uuid()) @db.Uuid
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  title       String        @db.VarChar(128)
+  description String        @default("")
+  Comparision Comparision[]
 }
 
 model ComparisonEntity {
-  id                                        String                                      @id @default(uuid()) @db.Uuid
-  createdAt                                 DateTime                                    @default(now())
-  updatedAt                                 DateTime                                    @updatedAt
-  title                                     String                                      @db.VarChar(128)
-  description                               String                                      @default("")
-  type                                      ComparisonEntityType
-  link                                      String
-  categories                                ComparisonEntityCategory[]
+  id           String                     @id @default(uuid()) @db.Uuid
+  createdAt    DateTime                   @default(now())
+  updatedAt    DateTime                   @updatedAt
+  title        String                     @db.VarChar(128)
+  description  String                     @default("")
+  type         ComparisonEntityType
+  link         String
+  categories   ComparisonEntityCategory[]
+  comparisions Comparision[]
 }
 
 model ComparisonEntityCategory {
-  id                                        String                                      @id @default(uuid()) @db.Uuid
-  createdAt                                 DateTime                                    @default(now())
-  updatedAt                                 DateTime                                    @updatedAt
-  title                                     String                                      @db.VarChar(128)
-  description                               String                                      @default("")
-  comparisonEntities                        ComparisonEntity[]
+  id                 String             @id @default(uuid()) @db.Uuid
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  title              String             @db.VarChar(128)
+  description        String             @default("")
+  comparisonEntities ComparisonEntity[]
+}
+
+model Comparision {
+  id                 String             @id @default(uuid()) @db.Uuid
+  title              String             @db.VarChar(128)
+  description        String             @default("")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  category           ComparisonCategory @relation(fields: [categoryId], references: [id])
+  categoryId         String             @db.Uuid
+  comparisonEntities ComparisonEntity[]
 }
 
 enum ComparisonEntityType {

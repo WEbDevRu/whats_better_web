@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Comparison {
+  category: ComparisonCategory!
+  comparisonEntities: [ComparisonEntity!]!
+  createdAt: String!
+  description: String!
+  id: ID
+  title: String!
+  updatedAt: String!
+}
+
 type ComparisonCategory {
   createdAt: String!
   description: String!
@@ -13,7 +23,7 @@ type ComparisonCategory {
 type ComparisonEntity {
   createdAt: String!
   description: String!
-  entityCategories: [ComparisonEntityCategoryModel!]!
+  entityCategories: [ComparisonEntityCategory!]!
   id: ID
   link: String!
   title: String!
@@ -21,7 +31,7 @@ type ComparisonEntity {
   updatedAt: String!
 }
 
-type ComparisonEntityCategoryModel {
+type ComparisonEntityCategory {
   createdAt: String!
   description: String!
   id: ID
@@ -36,9 +46,11 @@ enum ComparisonEntityType {
 }
 
 type Query {
+  getComparison(id: String!): Comparison!
   getComparisonCategory(id: String!): ComparisonCategory!
   getComparisonEntity(id: String!): ComparisonEntity!
+  queryComparison(limit: Float!, page: Float!): [Comparison!]!
   queryComparisonCategory: [ComparisonCategory!]!
   queryComparisonEntity(limit: Float!, page: Float!): [ComparisonEntity!]!
-  queryComparisonEntityCategory: [ComparisonEntityCategoryModel!]!
+  queryComparisonEntityCategory: [ComparisonEntityCategory!]!
 }

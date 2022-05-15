@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import TweenOneGroup from 'rc-tween-one/lib/TweenOneGroup';
+import styles from './AddComparison.module.less';
 import { useModal } from '../../../../hooks/useModal';
-import { AutoComplete, Button, Form, Input, Modal, Select, Spin, Tag, Tooltip, } from 'antd';
+import { AutoComplete, Button, Form, Input, Modal, Select, Spin, Tag, Tooltip } from 'antd';
 import { useTranslation } from '../../../../hooks/useTranslation';
 import { NS_ADMIN_PANEL, NS_COMMON } from '../../../../const/NAMESPACES';
-import styles from './AddComparisonEntityModal.module.less';
-import { ComparisonEntities } from '../../../../types/comparisonEntity';
 import { useRequest } from '../../../../hooks/useRequest';
-import { API_COMPARISON_ENTITIES_CATEGORY_SEARCH, API_COMPARISON_ENTITY, } from '../../../../const/http/API_URLS';
+import {
+    API_ADD_COMPARISON,
+    API_CATEGORIES_LIST,
+    API_COMPARISON_ENTITY_SEARCH,
+} from '../../../../const/http/API_URLS';
 import { RequestMethods, RequestStatuses } from '../../../../const/http';
+import { ComparisonEntities } from '../../../../types/comparisonEntity';
+import { PlusOutlined } from '@ant-design/icons';
+import TweenOneGroup from 'rc-tween-one/lib/TweenOneGroup';
+import { Category } from '../../../../types/categories';
+import { isExponentTwo } from '../../../../utils/number/isExponentTwo';
 
 const { Option } = Select;
 
@@ -17,12 +23,17 @@ interface IProps {
     refetchList: () => void,
 }
 
-const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
+const AddComparison: React.FC<IProps> = ({
+    refetchList,
+}) => {
     const createModal = useModal();
     const [form] = Form.useForm();
 
     const { t } = useTranslation(NS_ADMIN_PANEL);
     const { t:tc } = useTranslation(NS_COMMON);
+
+    const [categories, setCategories] = useState<Category[]>([]);
+
     const [categoriesOptions, setCategoriesOptions] = useState<{
         selectedOptions: Record<string, string>[],
         searchOptions: Record<string, string>[],
@@ -36,30 +47,58 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
         onRequest: handleSearchEntityCategory,
         state: searchResponse,
     } = useRequest({
-        url: API_COMPARISON_ENTITIES_CATEGORY_SEARCH,
+        url: API_COMPARISON_ENTITY_SEARCH,
         method: RequestMethods.Get,
     });
 
     const {
-        onRequest: handleAddEntity,
-        state: addEntityResponse,
+        onRequest: handleAddComparison,
+        state: addComparisonResponse,
     } = useRequest({
-        url: API_COMPARISON_ENTITY,
+        url: API_ADD_COMPARISON,
         method: RequestMethods.Post,
     });
 
+    const {
+        onRequest: onLoadCategoriesList,
+        state: loadCategoriesListRS,
+    } = useRequest({
+        url: API_CATEGORIES_LIST,
+        method: RequestMethods.Get
+    });
+
+    useEffect(() => {
+        onLoadCategoriesList({
+            params: {
+                page: 1,
+                limit: 50,
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        if (loadCategoriesListRS.status === RequestStatuses.Succeeded) {
+            setCategories(loadCategoriesListRS.result.items);
+        }
+    }, [loadCategoriesListRS.status]);
+
     const handleSubmit = async () => {
+        if (!isExponentTwo(categoriesOptions.selectedOptions.length))
+            form.setFields([{
+                name: 'entities',
+                errors: ['Count should be exponent two']
+            }]);
         form.submit();
     };
 
     const handleFinish = async (values:Record<string, string>) => {
-        handleAddEntity({
+        handleAddComparison({
             data: {
                 title: values.title,
                 description: values.description,
+                categoryId: values.category,
                 type: Object.values(ComparisonEntities)[Object.keys(ComparisonEntities).indexOf(values.type as any)],
-                link: values.link,
-                categories: categoriesOptions.selectedOptions.map((option) => option.id)
+                entitiesId: categoriesOptions.selectedOptions.map((option) => option.id)
             }
         });
         createModal.onStartConfirmationLoading();
@@ -118,13 +157,13 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
     };
 
     useEffect(() => {
-        if (addEntityResponse.status === RequestStatuses.Succeeded) {
+        if (addComparisonResponse.status === RequestStatuses.Succeeded) {
             createModal.onClose();
             createModal.onStopConfirmationLoading();
             form.resetFields();
             refetchList();
         }
-    }, [addEntityResponse.status]);
+    }, [addComparisonResponse.status]);
 
     return (
         <>
@@ -165,8 +204,8 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
                         <Input placeholder={t('categories.description.placeholder')} />
                     </Form.Item>
                     <Form.Item
-                        label='Type'
-                        name='type'
+                        label='Category'
+                        name='category'
                         required
                         rules={[{
                             required: true,
@@ -174,26 +213,14 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
                         }]}
                     >
                         <Select>
-                            {Object.keys(ComparisonEntities).map((type) => (
+                            {categories?.map((category) => (
                                 <Option
-                                    key={type}
-                                    disabled={type.toLowerCase() !==  ComparisonEntities.Integrated_video.toLowerCase()}
+                                    key={category.id}
                                 >
-                                    {type}
+                                    {category.title}
                                 </Option>
                             ))}
                         </Select>
-                    </Form.Item>
-                    <Form.Item
-                        label='Link'
-                        name='link'
-                        required
-                        rules={[{
-                            required: true,
-                            message: tc('formErrors.empty', { fieldName: 'Link' })
-                        }]}
-                    >
-                        <Input placeholder='Enter link' />
                     </Form.Item>
                     <TweenOneGroup
                         enter={{
@@ -239,7 +266,8 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
                         ))}
                     </TweenOneGroup>
                     <Form.Item
-                        label='Categories'
+                        label='Entities'
+                        name='entities'
                     >
                         <AutoComplete
                             allowClear
@@ -252,7 +280,7 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
                             }))}
                             onSearch={onSearch}
                             onSelect={handleSelect}
-                            placeholder='Select tags'
+                            placeholder='Select entities'
                             options={categoriesOptions.searchOptions.map((option) => ({
                                 value: option.id,
                                 label: option.title,
@@ -265,4 +293,4 @@ const AddComparisonEntityModal: React.FC<IProps> = ({ refetchList }) => {
     );
 };
 
-export default React.memo(AddComparisonEntityModal);
+export default React.memo(AddComparison);

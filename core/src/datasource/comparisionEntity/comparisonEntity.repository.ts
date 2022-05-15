@@ -29,7 +29,7 @@ export class ComparisonEntityRepository {
                 link,
                 categories: {
                     connect: categories.map((category) => ({
-                        id: category.comparisonEntityCategoryId
+                        id: category.comparisonEntityCategoryId,
                     })),
                 },
             },
@@ -65,5 +65,24 @@ export class ComparisonEntityRepository {
                 id,
             },
         });
+    }
+
+    async searchByTitleAndDescription({
+        text,
+    }) {
+        const clearedText = text.replace(/\+/g, ' ');
+
+        const result = await this.prismaService.comparisonEntity.findMany({
+            where: {
+                title: {
+                    search: clearedText,
+                },
+                description: {
+                    search: clearedText,
+                },
+            },
+        });
+
+        return result;
     }
 }
