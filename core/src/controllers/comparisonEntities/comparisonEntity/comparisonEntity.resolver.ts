@@ -18,6 +18,7 @@ registerEnumType(ComparisonEntityType, {
     name: 'ComparisonEntityType',
 });
 
+
 @Resolver(of => ComparisonEntity)
 export class ComparisonEntityResolver {
     constructor(
