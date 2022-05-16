@@ -6,7 +6,7 @@ import {
     ObjectType,
     registerEnumType,
 } from '@nestjs/graphql';
-import { ComparisonEntityType } from '../../../common/const/types/ComparisonEntity';
+import { ComparisonEntityTypes } from '../../../common/const/types/ComparisonEntity';
 
 @ObjectType()
 export class ComparisonEntity {
@@ -25,8 +25,8 @@ export class ComparisonEntity {
     @Field()
     description: string;
 
-    @Field(type => ComparisonEntityType)
-    type: ComparisonEntityType;
+    @Field(type => ComparisonEntityTypes)
+    type: ComparisonEntityTypes;
 
     @Field()
     link: string;

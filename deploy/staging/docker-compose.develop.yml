@@ -40,26 +40,10 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      - APP_ENV=develop
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=whats_better_network1
-      - traefik.http.routers.web-client.rule=Host(`admin.nikrainev.ru`) && PathPrefix(`/`)
-      - traefik.http.routers.web-client.entrypoints=http
-      - traefik.http.services.web-client.loadbalancer.server.port=3000
-
-  traefik:
-    build:
-      context: ../../proxy/staging
-      dockerfile: Dockerfile
-    container_name: traefik
-    restart: always
+      - APP_ENV=production
     ports:
-      - "80:80"
-      - "443:443"
-      - "127.0.0.1:8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - "3000:3000"
+
 
 networks:
   default:

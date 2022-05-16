@@ -16,4 +16,4 @@ RUN npm run build
 
 RUN npx prisma generate
 
-CMD ["/bin/sh", "-c", "/wait && npx prisma migrate deploy && npx prisma db seed && npm run start:prod"]
+CMD ["/bin/sh", "-c", "/wait && npx prisma migrate deploy && npx prisma db seed && npm run start:dev"]

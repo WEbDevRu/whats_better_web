@@ -4,13 +4,13 @@ import {
     IsString,
     IsArray,
 } from 'class-validator';
-import { ComparisonEntityType } from '../../../../common/const/types/ComparisonEntity';
+import { ComparisonEntityTypes } from '../../../../common/const/types/ComparisonEntity';
 
 export class AddEntityRequest {
     @IsNotEmpty()
     title: string;
 
-    @IsEnum(ComparisonEntityType)
+    @IsEnum(ComparisonEntityTypes)
     type: string;
 
     @IsString()
@@ -23,7 +23,7 @@ export class AddEntityRequest {
 export interface IAddEntity {
     title: string;
     description?: string;
-    type: ComparisonEntityType;
+    type: ComparisonEntityTypes;
     link: string;
     categories: string[];
 }

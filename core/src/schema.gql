@@ -40,9 +40,9 @@ type ComparisonEntityCategory {
 }
 
 enum ComparisonEntityType {
-  IMAGE
-  INTEGRATED_VIDEO
-  TEXT
+  Image
+  IntegratedVideo
+  Text
 }
 
 type Query {

@@ -25,6 +25,6 @@ async function bootstrap() {
         secret: VARS.cookieSalt,
     });
 
-    await app.listen(VARS.port);
+    await app.listen(VARS.port, '0.0.0.0');
 }
 bootstrap();
