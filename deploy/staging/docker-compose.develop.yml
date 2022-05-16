@@ -14,12 +14,6 @@ services:
       - "15432:5432"
 
   core:
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=whats_better_network1
-      - traefik.http.routers.core.rule=Host(`mytelegram.site`) && PathPrefix(`/graphql`)
-      - traefik.http.routers.core.entrypoints=http
-      - traefik.http.services.core.loadbalancer.server.port=3001
     build:
       context: ../../core
       dockerfile: Dockerfile
@@ -37,33 +31,18 @@ services:
       - auth-postgres
     links:
       - auth-postgres
+    ports:
+      - "3001:3001"
 
   web-client:
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=whats_better_network1
-      - traefik.http.routers.web-client.rule=Host(`mytelegram.site`) && PathPrefix(`/`)
-      - traefik.http.routers.web-client.entrypoints=http
-      - traefik.http.services.web-client.loadbalancer.server.port=3000
     build:
       context: ../../web-client
       dockerfile: Dockerfile
     restart: always
     environment:
       - APP_ENV=production
-
-  traefik:
-    build:
-      context: ../../proxy/staging
-      dockerfile: Dockerfile
-    container_name: traefik
-    restart: always
     ports:
-      - "80:80"
-      - "443:443"
-      - "127.0.0.1:8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - "3000:3000"
 
 networks:
   default:
