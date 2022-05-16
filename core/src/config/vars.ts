@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 export const VARS = {
-    port: process.env.PORT,
+    port: process.env.PORT || 3001,
     jwtSalt: process.env.JWT_SALT,
     cookieSalt: process.env.COOKIE_SALT,
     adminAccessTokenLiveTimeInSeconds: process.env.ADMIN_ACCESS_TOKEN_LIVE_TIME_IN_SECONDS,

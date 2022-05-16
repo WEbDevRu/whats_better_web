@@ -25,6 +25,8 @@ async function bootstrap() {
         secret: VARS.cookieSalt,
     });
 
+    console.log(VARS.port, 'listen port');
+
     await app.listen(VARS.port);
 }
 bootstrap();
