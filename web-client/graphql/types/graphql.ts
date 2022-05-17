@@ -25,6 +25,7 @@ export type Comparison = {
 
 export type ComparisonCategory = {
   __typename?: 'ComparisonCategory';
+  comparisons: Array<Comparison>;
   createdAt: Scalars['String'];
   description: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
@@ -54,9 +55,9 @@ export type ComparisonEntityCategory = {
 };
 
 export enum ComparisonEntityType {
-  Image = 'IMAGE',
-  IntegratedVideo = 'INTEGRATED_VIDEO',
-  Text = 'TEXT'
+  Image = 'Image',
+  IntegratedVideo = 'IntegratedVideo',
+  Text = 'Text'
 }
 
 export type Query = {
