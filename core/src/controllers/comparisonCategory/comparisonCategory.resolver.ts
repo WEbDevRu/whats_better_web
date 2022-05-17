@@ -2,11 +2,12 @@ import {
     Resolver,
     ResolveField,
     Args,
-    Query,
+    Query, Parent,
 } from '@nestjs/graphql';
 import { ComparisonCategory } from './entities/comparisonCategory.model';
 import { forwardRef, Inject } from '@nestjs/common';
 import { ComparisonCategoryRepository } from '../../datasource/comparisonCategory/comparisonCategory.repository';
+import { Comparison } from '../comparison/entities/comparison.model';
 
 @Resolver(of => ComparisonCategory)
 export class ComparisonCategoryResolver {
@@ -29,5 +30,16 @@ export class ComparisonCategoryResolver {
         });
 
         return result.items;
+    }
+
+    @ResolveField('comparisons', returns => [ Comparison])
+    async comparisonEntities(@Parent() comparison: Comparison) {
+        const { id } = comparison;
+
+        const result = await this.comparisonCategoryRepository.getCategoryComparisons({
+            categoryId: id,
+        });
+
+        return result.Comparision;
     }
 }

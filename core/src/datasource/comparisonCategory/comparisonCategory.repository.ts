@@ -59,7 +59,7 @@ export class ComparisonCategoryRepository {
         return this.prismaService.comparisonCategory.delete({
             where: {
                 id: categoryId,
-            }, 
+            },
         });
     }
 
@@ -76,6 +76,19 @@ export class ComparisonCategoryRepository {
                 description: {
                     search: clearedText,
                 },
+            },
+        });
+    }
+
+    async getCategoryComparisons({
+        categoryId,
+    }:{ categoryId: string }) {
+        return this.prismaService.comparisonCategory.findFirst({
+            where: {
+                id: categoryId,
+            },
+            include: {
+                Comparision: true,
             },
         });
     }

@@ -13,6 +13,7 @@ type Comparison {
 }
 
 type ComparisonCategory {
+  comparisons: [Comparison!]!
   createdAt: String!
   description: String!
   id: ID
