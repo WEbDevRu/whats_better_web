@@ -16,7 +16,6 @@ export class ComparisonRepository {
         categoryId: string,
         comparisonEntitiesId: string[]
     }) {
-        console.log(comparisonEntitiesId);
         return this.prismaService.comparision.create({
             data: {
                 title,
@@ -78,7 +77,6 @@ export class ComparisonRepository {
     async getComparisonEntitiesByComparison({
         comparisonId,
     }: { comparisonId: string }){
-        console.log(comparisonId);
         return this.prismaService.comparision.findFirst({
             where: {
                 id: comparisonId,
