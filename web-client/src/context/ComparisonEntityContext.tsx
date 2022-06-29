@@ -111,7 +111,7 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
         onDeleteEntitiesCategory({
             id: data.comparisonEntityCategoryId,
         });
-        
+
         setEntityCategoriesPaginate((c) => {
             const itemIndex = c.items.findIndex((item) => item.id === data.comparisonEntityCategoryId);
             if (itemIndex !== -1) {
@@ -119,8 +119,8 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
                 currentCopy.items[itemIndex].isFetching = true;
                 return  currentCopy;
             };
-            
-            return c; 
+
+            return c;
         });
     };
 
@@ -148,7 +148,6 @@ export const ComparisonEntityProvider = (props:PropsInterface) => {
 
     useEffect(() => {
         if (entitiesCategoriesResponse.status === RequestStatuses.Succeeded) {
-            console.log('here 1');
             setEntityCategoriesPaginate({
                 items: entitiesCategoriesResponse.result.items?.map((item:IComparisonEntityCategory) => ({ ...item, isFetching: false })),
                 totalItems: entitiesCategoriesResponse.result.totalItems,
